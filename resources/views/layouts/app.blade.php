@@ -1,36 +1,36 @@
+<!--
+=========================================================
+* Soft UI Dashboard PRO - v1.0.7
+=========================================================
+
+* Product Page:  https://www.creative-tim.com/product/soft-ui-dashboard-pro
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+@include('admin.partials.head')
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-        <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}" defer></script>
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+<body class="g-sidenav-show  bg-gray-100">
+    @include('admin.partials.sidebar')
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <!-- Navbar -->
+        @include('admin.partials.navbar')
+        <!-- End Navbar -->
+        <div class="container-fluid py-4">
+            {{ $slot }}
+            @include('admin.partials.footer')
         </div>
-    </body>
+    </main>
+    @include('admin.partials.scripts')
+
+    
+ 
+</body>
+
 </html>
