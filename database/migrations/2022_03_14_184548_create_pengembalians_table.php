@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('pengembalian', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("dokumen_id")->constrained("dokumen")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreignId("user_id")->constrained("users")->onDelete("cascade")->onUpdate("cascade");
+            $table->date('tgl_kembali');
+            $table->date('tgl_pengembalian');            
+            $table->integer('denda');                         
             $table->timestamps();
         });
     }
