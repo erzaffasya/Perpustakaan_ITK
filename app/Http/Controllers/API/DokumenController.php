@@ -20,7 +20,7 @@ class DokumenController extends Api
         $validator = Validator::make(
             $request->all(),
             [
-                'nama_Dokumen' => 'required',
+                'nama_dokumen' => 'required',
                 'detail' => 'required',
             ]
         );
@@ -30,7 +30,7 @@ class DokumenController extends Api
         }
 
         $Dokumen = new Dokumen();
-        $Dokumen->nama_Dokumen = $request->nama_Dokumen;
+        $Dokumen->nama_dokumen = $request->nama_dokumen;
         $Dokumen->detail = $request->detail;
         $Dokumen->save();
 
@@ -43,7 +43,7 @@ class DokumenController extends Api
         if (!$Dokumen) {
             return $this->errorResponse('Data tidak ditemukan', 201);
         }
-        
+
         return $this->successResponse($Dokumen);
     }
 
@@ -56,7 +56,7 @@ class DokumenController extends Api
         }
 
         $Dokumen = Dokumen::find($Dokumen->id)->update([
-            'nama_Dokumen' => $request->nama_Dokumen,
+            'nama_dokumen' => $request->nama_dokumen,
             'detail' => $request->detail,
 
         ]);

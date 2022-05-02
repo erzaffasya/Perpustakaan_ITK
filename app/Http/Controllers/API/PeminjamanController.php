@@ -20,7 +20,7 @@ class PeminjamanController extends Api
         $validator = Validator::make(
             $request->all(),
             [
-                'nama_Peminjaman' => 'required',
+                'nama_peminjaman' => 'required',
                 'detail' => 'required',
             ]
         );
@@ -30,7 +30,7 @@ class PeminjamanController extends Api
         }
 
         $Peminjaman = new Peminjaman();
-        $Peminjaman->nama_Peminjaman = $request->nama_Peminjaman;
+        $Peminjaman->nama_peminjaman = $request->nama_peminjaman;
         $Peminjaman->detail = $request->detail;
         $Peminjaman->save();
 
@@ -43,7 +43,7 @@ class PeminjamanController extends Api
         if (!$Peminjaman) {
             return $this->errorResponse('Data tidak ditemukan', 201);
         }
-        
+
         return $this->successResponse($Peminjaman);
     }
 
@@ -56,7 +56,7 @@ class PeminjamanController extends Api
         }
 
         $Peminjaman = Peminjaman::find($Peminjaman->id)->update([
-            'nama_Peminjaman' => $request->nama_Peminjaman,
+            'nama_peminjaman' => $request->nama_peminjaman,
             'detail' => $request->detail,
 
         ]);
