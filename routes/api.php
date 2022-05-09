@@ -23,21 +23,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login-api', [AuthController::class, 'auth']);
+
+Route::controller(KategoriController::class)->group(function () {
+    Route::get('kategori', 'index');
+    Route::post('kategori', 'store');
+    Route::get('kategori/{id}', 'show');
+    Route::put('kategori/{id}', 'update');
+    Route::post('kategori/{id}', 'destroy');
+});
+
 
 //Protecting Routes
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/profile', function(Request $request) {
-        return auth()->user();
-    });
+    Route::get('/profile', [AuthController::class, 'profile']);
 
-    Route::controller(KategoriController::class)->group(function () {
-        Route::get('lihat-kategori', 'index');
-        Route::post('tambah-kategori', 'store');
-        Route::get('detail-kategori/{id}', 'show');
-        Route::put('ubah-kategori/{id}', 'update');
-        Route::post('hapus-kategori/{id}', 'destroy');
-    });
-
+ 
     
 });

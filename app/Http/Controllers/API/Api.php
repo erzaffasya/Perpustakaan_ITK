@@ -31,7 +31,7 @@ class Api extends Controller
             'message' => $message,
             'code' => $code,
             'data' => null
-        ], 200);
+        ], 201);
     }
 
     protected function now(){

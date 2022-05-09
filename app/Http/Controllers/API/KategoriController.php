@@ -26,7 +26,7 @@ class KategoriController extends Api
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], '201');
+            return response()->json(['error' => $validator->errors()], 422);
         }
 
         $Kategori = new Kategori();
@@ -43,7 +43,7 @@ class KategoriController extends Api
         if (!$Kategori) {
             return $this->errorResponse('Data tidak ditemukan', 201);
         }
-        
+
         return $this->successResponse($Kategori);
     }
 
