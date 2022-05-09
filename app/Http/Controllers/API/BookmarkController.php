@@ -20,7 +20,7 @@ class BookmarkController extends Api
         $validator = Validator::make(
             $request->all(),
             [
-                'nama_Bookmark' => 'required',
+                'nama_bookmark' => 'required',
                 'detail' => 'required',
             ]
         );
@@ -30,7 +30,7 @@ class BookmarkController extends Api
         }
 
         $Bookmark = new Bookmark();
-        $Bookmark->nama_Bookmark = $request->nama_Bookmark;
+        $Bookmark->nama_bookmark = $request->nama_bookmark;
         $Bookmark->detail = $request->detail;
         $Bookmark->save();
 
@@ -43,7 +43,7 @@ class BookmarkController extends Api
         if (!$Bookmark) {
             return $this->errorResponse('Data tidak ditemukan', 201);
         }
-        
+
         return $this->successResponse($Bookmark);
     }
 
@@ -56,7 +56,7 @@ class BookmarkController extends Api
         }
 
         $Bookmark = Bookmark::find($Bookmark->id)->update([
-            'nama_Bookmark' => $request->nama_Bookmark,
+            'nama_bookmark' => $request->nama_bookmark,
             'detail' => $request->detail,
 
         ]);
