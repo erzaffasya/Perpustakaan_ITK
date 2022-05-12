@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId("user_id")->constrained("users")->onDelete("cascade")->onUpdate("cascade");
             $table->string('cover')->nullable();
             $table->string('abstract_en')->nullable();
-            $table->string('abstact_id')->nullable();
+            $table->string('abstract_id')->nullable();
             $table->string('bab1')->nullable();
             $table->string('bab2')->nullable();
             $table->string('bab3')->nullable();
