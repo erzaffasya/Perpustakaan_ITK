@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\Helper ;
 use App\Models\Bookmark;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,7 @@ class BookmarkController extends Api
 {
     public function index()
     {
+        return Helper::test();
         $Bookmark = Bookmark::all();
         return $this->successResponse($Bookmark);
     }

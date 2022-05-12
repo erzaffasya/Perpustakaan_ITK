@@ -69,7 +69,7 @@ return [
     |
     */
 
- 
+
     'timezone' => 'Asia/Jakarta',
     'locale' => 'id',
     'faker_locale' => 'id_ID',
@@ -194,7 +194,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'Helper' => App\Helpers\Helper::class,
     ])->toArray(),
 
 ];
