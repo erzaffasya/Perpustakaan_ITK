@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Dokumen extends Model
 {
     use HasFactory;
-    protected $table = 'akses_kelas';
+    protected $table = 'dokumen';
     protected $guard = [];
 
     protected $primaryKey = 'id';
