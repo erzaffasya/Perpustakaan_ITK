@@ -20,8 +20,8 @@ class DokumenController extends Api
         $validator = Validator::make(
             $request->all(),
             [
-                'nama_dokumen' => 'required',
-                'detail' => 'required',
+                'user_id' => 'required',
+                'kategori_id' => 'required',
             ]
         );
 
@@ -29,9 +29,7 @@ class DokumenController extends Api
             return response()->json(['error' => $validator->errors()], '201');
         }
 
-        $Dokumen = new Dokumen();
-        $Dokumen->nama_dokumen = $request->nama_dokumen;
-        $Dokumen->detail = $request->detail;
+        $Dokumen = new Dokumen($request->all());
         $Dokumen->save();
 
         return $this->successResponse(['status' => true, 'message' => 'Dokumen Berhasil Ditambahkan']);
@@ -55,12 +53,33 @@ class DokumenController extends Api
             return $this->errorResponse('Data tidak ditemukan', 201);
         }
 
-        $Dokumen = Dokumen::find($Dokumen->id)->update([
-            'nama_dokumen' => $request->nama_dokumen,
-            'detail' => $request->detail,
+        $Dokumen = Dokumen::find($Dokumen->id);
 
-        ]);
-
+        $Dokumen->judul = $request->judul;
+        if($request->kategori_id != null){
+            $Dokumen->kategori_id = $request->kategori_id;
+        }
+        if($request->user_id != null){
+        $Dokumen->user_id = $request->user_id;
+        }
+        $Dokumen->tahun_terbit = $request->tahun_terbit;
+        $Dokumen->nama_pengarang = $request->nama_pengarang;
+        $Dokumen->penerbit = $request->penerbit;
+        $Dokumen->cover = $request->cover;
+        $Dokumen->abstract_en = $request->abstract_en;
+        $Dokumen->abstract_id = $request->abstract_id;
+        $Dokumen->bab1 = $request->bab1;
+        $Dokumen->bab2 = $request->bab2;
+        $Dokumen->bab3 = $request->bab3;
+        $Dokumen->bab4 = $request->bab4;
+        $Dokumen->kesimpulan = $request->kesimpulan;
+        $Dokumen->daftar_pustaka = $request->daftar_pustaka;
+        $Dokumen->paper = $request->paper;
+        $Dokumen->lembar_persetujuan = $request->lembar_persetujuan;
+        $Dokumen->full_dokumen = $request->full_dokumen;
+        $Dokumen->data_tambahan = $request->data_tambahan;
+        $Dokumen->save();
+        
         return $this->successResponse(['status' => true, 'message' => 'Dokumen Berhasil Diubah']);
     }
 

@@ -18,7 +18,7 @@ class Api extends Controller
     {
         return response()->json([
             'status'=> 'success',
-            'message' => $message,
+            // 'message' => $message,
             'code' => $code,
             'data' => $data
         ], $code);

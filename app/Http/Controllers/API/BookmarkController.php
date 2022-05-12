@@ -20,8 +20,7 @@ class BookmarkController extends Api
         $validator = Validator::make(
             $request->all(),
             [
-                'nama_bookmark' => 'required',
-                'detail' => 'required',
+                'dokumen_id' => 'required',
             ]
         );
 
@@ -29,9 +28,7 @@ class BookmarkController extends Api
             return response()->json(['error' => $validator->errors()], '201');
         }
 
-        $Bookmark = new Bookmark();
-        $Bookmark->nama_bookmark = $request->nama_bookmark;
-        $Bookmark->detail = $request->detail;
+        $Bookmark = new Bookmark($request->all());
         $Bookmark->save();
 
         return $this->successResponse(['status' => true, 'message' => 'Bookmark Berhasil Ditambahkan']);
@@ -54,11 +51,10 @@ class BookmarkController extends Api
         if (!$Bookmark) {
             return $this->errorResponse('Data tidak ditemukan', 201);
         }
-
+        // dd($request);
         $Bookmark = Bookmark::find($Bookmark->id)->update([
-            'nama_bookmark' => $request->nama_bookmark,
-            'detail' => $request->detail,
-
+            'dokumen_id' => $request->dokumen_id,
+            'user_id' => $request->user_id,
         ]);
 
         return $this->successResponse(['status' => true, 'message' => 'Bookmark Berhasil Diubah']);

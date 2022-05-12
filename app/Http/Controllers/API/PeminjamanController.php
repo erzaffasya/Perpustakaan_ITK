@@ -20,8 +20,11 @@ class PeminjamanController extends Api
         $validator = Validator::make(
             $request->all(),
             [
-                'nama_peminjaman' => 'required',
-                'detail' => 'required',
+                'tgl_peminjaman' => 'required',
+                'tgl_pengembalian' => 'required',
+                'status' => 'required',
+                'dokumen_id' => 'required',
+                'user_id' => 'required',
             ]
         );
 
@@ -29,9 +32,7 @@ class PeminjamanController extends Api
             return response()->json(['error' => $validator->errors()], '201');
         }
 
-        $Peminjaman = new Peminjaman();
-        $Peminjaman->nama_peminjaman = $request->nama_peminjaman;
-        $Peminjaman->detail = $request->detail;
+        $Peminjaman = new Peminjaman($request->all());
         $Peminjaman->save();
 
         return $this->successResponse(['status' => true, 'message' => 'Peminjaman Berhasil Ditambahkan']);
@@ -56,9 +57,11 @@ class PeminjamanController extends Api
         }
 
         $Peminjaman = Peminjaman::find($Peminjaman->id)->update([
-            'nama_peminjaman' => $request->nama_peminjaman,
-            'detail' => $request->detail,
-
+            'tgl_peminjaman' => $request->tgl_peminjaman,
+            'tgl_pengembalian' => $request->tgl_pengembalian,
+            'status' => $request->status,
+            'dokumen_id' => $request->dokumen_id,
+            'user_id' => $request->user_id,
         ]);
 
         return $this->successResponse(['status' => true, 'message' => 'Peminjaman Berhasil Diubah']);

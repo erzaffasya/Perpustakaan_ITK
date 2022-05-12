@@ -9,7 +9,7 @@ class Dokumen extends Model
 {
     use HasFactory;
     protected $table = 'dokumen';
-    protected $guard = [];
+    protected $guarded = [];
 
     protected $primaryKey = 'id';
 
