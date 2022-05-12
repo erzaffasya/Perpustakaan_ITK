@@ -9,10 +9,7 @@ class Dokumen extends Model
 {
     use HasFactory;
     protected $table = 'akses_kelas';
-    protected $fillable = [
-        'user_id',
-        'mata_kuliah_id',
-    ];
+    protected $guard = [];
 
     protected $primaryKey = 'id';
 
@@ -20,8 +17,12 @@ class Dokumen extends Model
         'user_id' => 'integer', 
         'mata_kuliah_id' => 'integer', ];
 
-    public function matkul()
+    public function kategori()
     {
-        return $this->belongsTo(MataKuliah::class, 'mata_kuliah_id', 'id');
+        return $this->belongsTo(Kategori::class, 'kategori_id', 'id');
+    }
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
