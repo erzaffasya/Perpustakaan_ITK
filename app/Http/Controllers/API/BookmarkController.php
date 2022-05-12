@@ -12,7 +12,6 @@ class BookmarkController extends Api
 {
     public function index()
     {
-        return Helper::test();
         $Bookmark = Bookmark::all();
         return $this->successResponse($Bookmark);
     }
