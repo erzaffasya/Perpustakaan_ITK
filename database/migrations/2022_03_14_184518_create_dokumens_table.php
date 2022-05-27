@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('dokumen', function (Blueprint $table) {
             $table->id();
             $table->string('judul')->nullable();
-            $table->foreignId("kategori_id")->constrained("kategori")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreignId("kategori_id")->nullable()->constrained("kategori")->onDelete("cascade")->onUpdate("cascade");
             $table->string('tahun_terbit')->nullable();
             $table->string('nama_pengarang')->nullable();
             $table->string('penerbit')->nullable();
-            $table->foreignId("user_id")->constrained("users")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreignId("user_id")->nullable()->constrained("users")->onDelete("cascade")->onUpdate("cascade");
             $table->string('cover')->nullable();
             $table->string('abstract_en')->nullable();
             $table->string('abstract_id')->nullable();

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('bookmark', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("dokumen_id")->constrained("dokumen")->onDelete("cascade")->onUpdate("cascade");
-            $table->foreignId("user_id")->constrained("users")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreignId("dokumen_id")->nullable()->constrained("dokumen")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreignId("user_id")->nullable()->constrained("users")->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
         });
     }
