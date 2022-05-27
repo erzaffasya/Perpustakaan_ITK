@@ -12,7 +12,7 @@ use Tests\TestCase;
 class PeminjamanTest extends TestCase
 {
     use WithFaker;
-    public function test_lihat_prapengajuan()
+    public function test_lihat_peminjaman()
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)
@@ -21,7 +21,7 @@ class PeminjamanTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_tambah_prapengajuan()
+    public function test_tambah_peminjaman()
     {
 
         $user = User::factory()->create();
@@ -36,10 +36,10 @@ class PeminjamanTest extends TestCase
             ]);
 
         $response->assertStatus(200);
-        // $response->assertRedirect(url('/api/peminjaman.index'));
+        
     }
 
-    public function test_edit_prapengajuan()
+    public function test_edit_peminjaman()
     {
         $peminjaman = Peminjaman::factory()->create();
         $user = User::factory()->create();
@@ -54,9 +54,9 @@ class PeminjamanTest extends TestCase
             ]);
 
         $response->assertStatus(200);
-        // $response->assertRedirect(url('/api/peminjaman.index'));
+        
     }
-    public function test_hapus_prapengajuan()
+    public function test_hapus_peminjaman()
     {
         $peminjaman = Peminjaman::factory()->create();
         $user = User::factory()->create();
@@ -64,6 +64,6 @@ class PeminjamanTest extends TestCase
             ->delete(url('/api/peminjaman',$peminjaman->id));
 
         $response->assertStatus(200);
-        // $response->assertRedirect(url('/api/peminjaman.index'));
+        
     }
 }
