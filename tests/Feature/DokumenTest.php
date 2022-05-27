@@ -2,72 +2,100 @@
 
 namespace Tests\Feature;
 
+use App\Models\Dokumen;
+use App\Models\Kategori;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class DokumenTest extends TestCase
 {
-    // public function test_lihat_permohonan_review()
-    // {
-    //     $user = User::factory()->create();
-    //     $response = $this->actingAs($user)
-    //         ->get(route('PermohonanReview.index'));
+    use WithFaker;
 
-    //     $response->assertStatus(200);
-    // }
+    public function test_lihat_dokumen()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)
+            ->get(url('/api/dokumen'));
 
-    // public function test_tambah_permohonan_review()
-    // {
-    //     Storage::fake('avatars');
- 
-    //     $file = UploadedFile::fake()->image('avatar.jpg');
+        $response->assertStatus(200);
+    }
 
-    //     $Kategori = KategoriPaten::factory()->create();
-    //     $user = User::factory()->create();
-    //     $response = $this->actingAs($user)
-    //         ->post(route('PermohonanReview.store'), [
-    //             'judul' => 'Test Judul',
-    //             'status' => 'Menunggu',
-    //             'file' => $file,
-    //             'kategori_paten_id' => $Kategori->id,
-    //         ]);
+    public function test_tambah_dokumen()
+    {
+        Storage::fake('avatars');
+        $file = UploadedFile::fake()->image('avatar.jpg');
 
-    //     $response->assertStatus(302);
-    //     // $response->assertRedirect(route('PermohonanReview.index'));
-    // }
-    // public function test_edit_permohonan_review()
-    // {
-    //     Storage::fake('avatars'); 
-    //     $file = UploadedFile::fake()->image('avatar.jpg');
-    //     $user = User::factory()->create();
-    //     $Kategori = KategoriPaten::factory()->create();
-    //     $Permohonan = PermohonanReview::factory()->create();
-    //     $response = $this->actingAs($user)
-    //         ->put(route('PermohonanReview.update', $Permohonan->id), [
-    //             'judul' => 'Test edit',
-    //             'status' => 'Menunggu',
-    //             'file' => $file,
-    //             'kategori_paten_id' => $Kategori->id,
-    //             'user_id' => $user->id
-    //         ]);
+        $Kategori = Kategori::factory()->create();
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)
+            ->post(url('/api/dokumen'), [
+                'judul' => 'Test Judul',
+                'kategori_id' => $Kategori->id,
+                'tahun_terbit' => 2001,
+                'nama_pengarang' => 'Test Judul',
+                'penerbit' => $this->faker->name(),
+                'user_id' => $user->id,
+                'cover' => $file,
+                'abstract_en' => $file,
+                'abstract_id' => $file,
+                'bab1' => $file,
+                'bab2' => $file,
+                'bab3' => $file,
+                'bab4' => $file,
+                'kesimpulan' => $file,
+                'daftar_pustaka' => $file,
+                'paper' => $file,
+                'lembar_persetujuan' => $file,
+                'full_dokumen' => $file,
+            ]);
 
-    //     $response->assertStatus(302);
-    //     $response->assertRedirect(route('PermohonanReview.index'));
-    // }
-    // public function test_hapus_permohonan_review()
-    // {
-    //     $Permohonan = PermohonanReview::factory()->create();
-    //     $Kategori = KategoriPaten::factory()->create();
-    //     $user = User::factory()->create();
-    //     $response = $this->actingAs($user)
-    //         ->delete(route('PermohonanReview.destroy', $Permohonan->id), [
-    //             'judul' => 'Test Judul',
-    //             'status' => 'Menunggu',
-    //             'kategori_paten_id' => $Kategori->id,
-    //         ]);
+        $response->assertStatus(200);
+      
+    }
+    public function test_edit_dokumen()
+    {
+        Storage::fake('avatars');
+        $file = UploadedFile::fake()->image('avatar.jpg');
+        $user = User::factory()->create();
+        $Dokumen = Dokumen::factory()->create();
+        $Kategori = Kategori::factory()->create();
+        $response = $this->actingAs($user)
+            ->put(url('/api/dokumen', $Dokumen->id), [
+                'judul' => 'Test Judul',
+                'kategori_id' => $Kategori->id,
+                'tahun_terbit' => 2001,
+                'nama_pengarang' => 'Test Judul',
+                'penerbit' => $this->faker->name(),
+                'user_id' => $user->id,
+                'cover' => $file,
+                'abstract_en' => $file,
+                'abstract_id' => $file,
+                'bab1' => $file,
+                'bab2' => $file,
+                'bab3' => $file,
+                'bab4' => $file,
+                'kesimpulan' => $file,
+                'daftar_pustaka' => $file,
+                'paper' => $file,
+                'lembar_persetujuan' => $file,
+                'full_dokumen' => $file,
+            ]);
 
-    //     $response->assertStatus(302);
-    //     // $response->assertRedirect(route('PermohonanReview.index'));
-    // }
+        $response->assertStatus(200);
+      
+    }
+    public function test_hapus_dokumen()
+    {
+        $Dokumen = Dokumen::factory()->create();
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)
+            ->delete(url('/api/dokumen',$Dokumen->id));
+
+        $response->assertStatus(200);
+      
+    }
 }

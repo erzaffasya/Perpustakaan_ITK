@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Bookmark;
+use App\Models\Dokumen;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -9,39 +11,52 @@ use Tests\TestCase;
 
 class BookmarkTest extends TestCase
 {
-    // public function test_lihatPrapengajuan()
-    // {
-    //     $user = User::factory()->create();
-    //     $response = $this->actingAs($user)
-    //         ->get(route('PrapengajuanCipta.index'));
+    public function test_lihat_prapengajuan()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)
+            ->get(url('/api/bookmark'));
 
-    //     $response->assertStatus(200);
-    // }
+        $response->assertStatus(200);
+    }
 
-    // public function test_tambahPrapengajuan()
-    // {
+    public function test_tambah_prapengajuan()
+    {
 
-    //     $user = User::factory()->create();
-    //     $response = $this->actingAs($user)
-    //         ->post(route('PrapengajuanCipta.store'), [
-    //             'judul' => 'test',
-    //             'user_id' => $user->id,
-    //         ]);
+        $user = User::factory()->create();
+        $Dokumen = Dokumen::factory()->create();
+        $response = $this->actingAs($user)
+            ->post(url('/api/bookmark'), [
+                'dokumen_id' => $Dokumen->id,
+                'user_id' => $user->id,
+            ]);
 
-    //     $response->assertStatus(302);
-    //     $response->assertRedirect(route('PrapengajuanCipta.index'));
-    // }
+        $response->assertStatus(200);
+        // $response->assertRedirect(url('/api/bookmark.index'));
+    }
 
-    // public function test_editPrapengajuan()
-    // {
-    //     $user = User::factory()->create();
-    //     // $prapengajuan = PrapengajuanCipta::factory()->create();
-    //     $response = $this->actingAs($user)
-    //         ->put(route('PrapengajuanCipta.update', 1), [
-    //             'judul' => 'test 1',
-    //         ]);
+    public function test_edit_prapengajuan()
+    {
+        $bookmark = Bookmark::factory()->create();
+        $user = User::factory()->create();
+        $Dokumen = Dokumen::factory()->create();
+        $response = $this->actingAs($user)
+            ->put(url('/api/bookmark', $bookmark->id), [
+                'dokumen_id' => $Dokumen->id,
+                'user_id' => $user->id,
+            ]);
 
-    //     $response->assertStatus(302);
-    //     $response->assertRedirect(route('PrapengajuanCipta.index'));
-    // }
+        $response->assertStatus(200);
+        // $response->assertRedirect(url('/api/bookmark.index'));
+    }
+    public function test_hapus_prapengajuan()
+    {
+        $bookmark = Bookmark::factory()->create();
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)
+            ->delete(url('/api/bookmark',$bookmark->id));
+
+        $response->assertStatus(200);
+        // $response->assertRedirect(url('/api/bookmark.index'));
+    }
 }

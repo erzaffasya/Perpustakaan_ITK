@@ -2,46 +2,68 @@
 
 namespace Tests\Feature;
 
+use App\Models\Dokumen;
+use App\Models\Peminjaman;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\WithFaker ;
 use Tests\TestCase;
 
 class PeminjamanTest extends TestCase
 {
-    // public function test_lihatPrapengajuan()
-    // {
-    //     $user = User::factory()->create();
-    //     $response = $this->actingAs($user)
-    //         ->get(route('PrapengajuanCipta.index'));
+    use WithFaker;
+    public function test_lihat_prapengajuan()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)
+            ->get(url('/api/peminjaman'));
 
-    //     $response->assertStatus(200);
-    // }
+        $response->assertStatus(200);
+    }
 
-    // public function test_tambahPrapengajuan()
-    // {
+    public function test_tambah_prapengajuan()
+    {
 
-    //     $user = User::factory()->create();
-    //     $response = $this->actingAs($user)
-    //         ->post(route('PrapengajuanCipta.store'), [
-    //             'judul' => 'test',
-    //             'user_id' => $user->id,
-    //         ]);
+        $user = User::factory()->create();
+        $Dokumen = Dokumen::factory()->create();
+        $response = $this->actingAs($user)
+            ->post(url('/api/peminjaman'), [
+                'tgl_peminjaman' => $this->faker->date(),
+                'tgl_pengembalian' => $this->faker->date(),
+                'status' => 1,
+                'dokumen_id' => $Dokumen->id,
+                'user_id' => $user->id,
+            ]);
 
-    //     $response->assertStatus(302);
-    //     $response->assertRedirect(route('PrapengajuanCipta.index'));
-    // }
+        $response->assertStatus(200);
+        // $response->assertRedirect(url('/api/peminjaman.index'));
+    }
 
-    // public function test_editPrapengajuan()
-    // {
-    //     $user = User::factory()->create();
-    //     // $prapengajuan = PrapengajuanCipta::factory()->create();
-    //     $response = $this->actingAs($user)
-    //         ->put(route('PrapengajuanCipta.update', 1), [
-    //             'judul' => 'test 1',
-    //         ]);
+    public function test_edit_prapengajuan()
+    {
+        $peminjaman = Peminjaman::factory()->create();
+        $user = User::factory()->create();
+        $Dokumen = Dokumen::factory()->create();
+        $response = $this->actingAs($user)
+            ->put(url('/api/peminjaman', $peminjaman->id), [
+                'tgl_peminjaman' => $this->faker->date(),
+                'tgl_pengembalian' => $this->faker->date(),
+                'status' => 0,
+                'dokumen_id' => $Dokumen->id,
+                'user_id' => $user->id,
+            ]);
 
-    //     $response->assertStatus(302);
-    //     $response->assertRedirect(route('PrapengajuanCipta.index'));
-    // }
+        $response->assertStatus(200);
+        // $response->assertRedirect(url('/api/peminjaman.index'));
+    }
+    public function test_hapus_prapengajuan()
+    {
+        $peminjaman = Peminjaman::factory()->create();
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)
+            ->delete(url('/api/peminjaman',$peminjaman->id));
+
+        $response->assertStatus(200);
+        // $response->assertRedirect(url('/api/peminjaman.index'));
+    }
 }

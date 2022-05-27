@@ -44,7 +44,7 @@ class DokumenController extends Api
             $file_ext = $request->cover->extension();
             $file_name = 'cover_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $cover = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->cover->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->file('cover')->storeAs("public/documents/$request->user_id", $cover);
             $Dokumen->cover = $cover;
         }
 
@@ -53,7 +53,7 @@ class DokumenController extends Api
             $file_ext = $request->abstract_en->extension();
             $file_name = 'abstract_en_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $abstract_en = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->abstract_en->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->abstract_en->storeAs("public/documents/$request->user_id",  $abstract_en);
             $Dokumen->abstract_en = $abstract_en;
         }
 
@@ -62,7 +62,7 @@ class DokumenController extends Api
             $file_ext = $request->abstract_id->extension();
             $file_name = 'abstract_id_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $abstract_id = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->abstract_id->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->abstract_id->storeAs("public/documents/$request->user_id", $abstract_id);
             $Dokumen->abstract_id = $abstract_id;
         }
 
@@ -71,7 +71,7 @@ class DokumenController extends Api
             $file_ext = $request->bab1->extension();
             $file_name = 'bab1_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $bab1 = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->bab1->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->bab1->storeAs("public/documents/$request->user_id", $bab1);
             $Dokumen->bab1 = $bab1;
         }
 
@@ -80,7 +80,7 @@ class DokumenController extends Api
             $file_ext = $request->bab2->extension();
             $file_name = 'bab2_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $bab2 = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->bab2->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->bab2->storeAs("public/documents/$request->user_id", $bab2);
             $Dokumen->bab2 = $bab2;
         }
 
@@ -89,7 +89,7 @@ class DokumenController extends Api
             $file_ext = $request->bab3->extension();
             $file_name = 'bab3_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $bab3 = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->bab2->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->bab2->storeAs("public/documents/$request->user_id", $bab3);
             $Dokumen->bab3 = $bab3;
         }
 
@@ -98,7 +98,7 @@ class DokumenController extends Api
             $file_ext = $request->bab4->extension();
             $file_name = 'bab4_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $bab4 = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->bab4->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->bab4->storeAs("public/documents/$request->user_id", $bab4);
             $Dokumen->bab4 = $bab4;
         }
 
@@ -107,7 +107,7 @@ class DokumenController extends Api
             $file_ext = $request->kesimpulan->extension();
             $file_name = 'kesimpulan_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $kesimpulan = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->kesimpulan->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->kesimpulan->storeAs("public/documents/$request->user_id", $kesimpulan);
             $Dokumen->kesimpulan = $kesimpulan;
         }
 
@@ -116,7 +116,7 @@ class DokumenController extends Api
             $file_ext = $request->daftar_pustaka->extension();
             $file_name = 'daftar_pustaka_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $daftar_pustaka = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->daftar_pustaka->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->daftar_pustaka->storeAs("public/documents/$request->user_id", $daftar_pustaka);
             $Dokumen->daftar_pustaka = $daftar_pustaka;
         }
 
@@ -125,7 +125,7 @@ class DokumenController extends Api
             $file_ext = $request->paper->extension();
             $file_name = 'paper_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $paper = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->paper->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->paper->storeAs("public/documents/$request->user_id", $paper);
             $Dokumen->paper = $paper;
         }
 
@@ -134,7 +134,7 @@ class DokumenController extends Api
             $file_ext = $request->lembar_persetujuan->extension();
             $file_name = 'lembar_persetujuan_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $lembar_persetujuan = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->lembar_persetujuan->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->lembar_persetujuan->storeAs("public/documents/$request->user_id", $lembar_persetujuan);
             $Dokumen->lembar_persetujuan = $lembar_persetujuan;
         }
 
@@ -143,7 +143,7 @@ class DokumenController extends Api
             $file_ext = $request->full_dokumen->extension();
             $file_name = 'full_dokumen_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $full_dokumen = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->full_dokumen->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->lembar_persetujuan->storeAs("public/documents/$request->user_id", $full_dokumen);
             $Dokumen->full_dokumen = $full_dokumen;
         }
 
@@ -184,12 +184,12 @@ class DokumenController extends Api
         $Dokumen->penerbit = $request->penerbit;
         $Dokumen->data_tambahan = $request->data_tambahan;
 
-           // Cover 
-           if ($request->cover != null) {
+         // Cover 
+         if ($request->cover != null) {
             $file_ext = $request->cover->extension();
             $file_name = 'cover_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $cover = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->cover->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->file('cover')->storeAs("public/documents/$request->user_id", $cover);
             $Dokumen->cover = $cover;
         }
 
@@ -198,7 +198,7 @@ class DokumenController extends Api
             $file_ext = $request->abstract_en->extension();
             $file_name = 'abstract_en_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $abstract_en = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->abstract_en->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->abstract_en->storeAs("public/documents/$request->user_id",  $abstract_en);
             $Dokumen->abstract_en = $abstract_en;
         }
 
@@ -207,7 +207,7 @@ class DokumenController extends Api
             $file_ext = $request->abstract_id->extension();
             $file_name = 'abstract_id_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $abstract_id = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->abstract_id->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->abstract_id->storeAs("public/documents/$request->user_id", $abstract_id);
             $Dokumen->abstract_id = $abstract_id;
         }
 
@@ -216,7 +216,7 @@ class DokumenController extends Api
             $file_ext = $request->bab1->extension();
             $file_name = 'bab1_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $bab1 = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->bab1->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->bab1->storeAs("public/documents/$request->user_id", $bab1);
             $Dokumen->bab1 = $bab1;
         }
 
@@ -225,7 +225,7 @@ class DokumenController extends Api
             $file_ext = $request->bab2->extension();
             $file_name = 'bab2_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $bab2 = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->bab2->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->bab2->storeAs("public/documents/$request->user_id", $bab2);
             $Dokumen->bab2 = $bab2;
         }
 
@@ -234,7 +234,7 @@ class DokumenController extends Api
             $file_ext = $request->bab3->extension();
             $file_name = 'bab3_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $bab3 = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->bab2->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->bab2->storeAs("public/documents/$request->user_id", $bab3);
             $Dokumen->bab3 = $bab3;
         }
 
@@ -243,7 +243,7 @@ class DokumenController extends Api
             $file_ext = $request->bab4->extension();
             $file_name = 'bab4_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $bab4 = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->bab4->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->bab4->storeAs("public/documents/$request->user_id", $bab4);
             $Dokumen->bab4 = $bab4;
         }
 
@@ -252,7 +252,7 @@ class DokumenController extends Api
             $file_ext = $request->kesimpulan->extension();
             $file_name = 'kesimpulan_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $kesimpulan = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->kesimpulan->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->kesimpulan->storeAs("public/documents/$request->user_id", $kesimpulan);
             $Dokumen->kesimpulan = $kesimpulan;
         }
 
@@ -261,7 +261,7 @@ class DokumenController extends Api
             $file_ext = $request->daftar_pustaka->extension();
             $file_name = 'daftar_pustaka_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $daftar_pustaka = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->daftar_pustaka->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->daftar_pustaka->storeAs("public/documents/$request->user_id", $daftar_pustaka);
             $Dokumen->daftar_pustaka = $daftar_pustaka;
         }
 
@@ -270,7 +270,7 @@ class DokumenController extends Api
             $file_ext = $request->paper->extension();
             $file_name = 'paper_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $paper = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->paper->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->paper->storeAs("public/documents/$request->user_id", $paper);
             $Dokumen->paper = $paper;
         }
 
@@ -279,7 +279,7 @@ class DokumenController extends Api
             $file_ext = $request->lembar_persetujuan->extension();
             $file_name = 'lembar_persetujuan_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $lembar_persetujuan = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->lembar_persetujuan->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->lembar_persetujuan->storeAs("public/documents/$request->user_id", $lembar_persetujuan);
             $Dokumen->lembar_persetujuan = $lembar_persetujuan;
         }
 
@@ -288,9 +288,10 @@ class DokumenController extends Api
             $file_ext = $request->full_dokumen->extension();
             $file_name = 'full_dokumen_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $full_dokumen = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->full_dokumen->storeAs('public/documents/' . $request->user_id . '/' . $file_name);
+            $request->lembar_persetujuan->storeAs("public/documents/$request->user_id", $full_dokumen);
             $Dokumen->full_dokumen = $full_dokumen;
         }
+
         $Dokumen->save();
 
         return $this->successResponse(['status' => true, 'message' => 'Dokumen Berhasil Diubah']);

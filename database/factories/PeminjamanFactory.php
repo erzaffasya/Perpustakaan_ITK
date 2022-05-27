@@ -17,7 +17,7 @@ class PeminjamanFactory extends Factory
     public function definition()
     {
         return [
-            'tgl_peminjaman' => $this->faker->name(),
+            'tgl_peminjaman' => $this->faker->date(),
         ];
     }
 }

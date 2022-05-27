@@ -34,7 +34,7 @@ Route::controller(KategoriController::class)->group(function () {
     Route::post('kategori', 'store');
     Route::get('kategori/{id}', 'show');
     Route::put('kategori/{id}', 'update');
-    Route::post('kategori/{id}', 'destroy');
+    Route::delete('kategori/{id}', 'destroy');
 });
 
 //Bookmark
@@ -43,7 +43,7 @@ Route::controller(BookmarkController::class)->group(function () {
     Route::post('bookmark', 'store');
     Route::get('bookmark/{id}', 'show');
     Route::put('bookmark/{id}', 'update');
-    Route::post('bookmark/{id}', 'destroy');
+    Route::delete('bookmark/{id}', 'destroy');
 });
 
 //Peminjaman
@@ -52,7 +52,7 @@ Route::controller(PeminjamanController::class)->group(function () {
     Route::post('peminjaman', 'store');
     Route::get('peminjaman/{id}', 'show');
     Route::put('peminjaman/{id}', 'update');
-    Route::post('peminjaman/{id}', 'destroy');
+    Route::delete('peminjaman/{id}', 'destroy');
 });
 
 //Dokumen
@@ -61,14 +61,11 @@ Route::controller(DokumenController::class)->group(function () {
     Route::post('dokumen', 'store');
     Route::get('dokumen/{id}', 'show');
     Route::put('dokumen/{id}', 'update');
-    Route::post('dokumen/{id}', 'destroy');
+    Route::delete('dokumen/{id}', 'destroy');
 });
 
 //Protecting Routes
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
-
- 
-    
 });
