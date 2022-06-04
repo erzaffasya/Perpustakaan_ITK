@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class BookmarkTest extends TestCase
 {
-    public function test_lihat_prapengajuan()
+    public function test_lihat_bookmark()
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)
@@ -20,7 +20,7 @@ class BookmarkTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_tambah_prapengajuan()
+    public function test_tambah_bookmark()
     {
 
         $user = User::factory()->create();
@@ -35,7 +35,7 @@ class BookmarkTest extends TestCase
         // $response->assertRedirect(url('/api/bookmark.index'));
     }
 
-    public function test_edit_prapengajuan()
+    public function test_edit_bookmark()
     {
         $bookmark = Bookmark::factory()->create();
         $user = User::factory()->create();
@@ -49,7 +49,7 @@ class BookmarkTest extends TestCase
         $response->assertStatus(200);
         // $response->assertRedirect(url('/api/bookmark.index'));
     }
-    public function test_hapus_prapengajuan()
+    public function test_hapus_bookmark()
     {
         $bookmark = Bookmark::factory()->create();
         $user = User::factory()->create();
