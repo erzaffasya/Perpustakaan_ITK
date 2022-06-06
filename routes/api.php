@@ -18,12 +18,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::get('/', function () {
     return abort(403, 'Dokumentasi ada di GRUP.');
-});
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
 });
 
 
@@ -67,8 +64,14 @@ Route::controller(DokumenController::class)->group(function () {
     Route::delete('dokumen/{id}', 'destroy');
 });
 
+
+
 //Protecting Routes
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
+
+    Route::get('/dokumen/{id}/download', [DokumenController::class, 'download']);
+    Route::get('/dokumen/{id}/view', [DokumenController::class, 'view']);
+    Route::get('{id}/view/{filename}', [DokumenController::class, 'view_dokumen']);
 });
