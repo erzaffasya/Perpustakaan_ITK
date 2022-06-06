@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return abort(403, 'Unauthorized action.');
+    return abort(403, 'Sabar yak.');
 });
 
 // Route::get('/dashboard', function () {
