@@ -17,10 +17,10 @@ class DokumenController extends Api
         return $this->successResponse($Dokumen);
     }
 
-    public function view(Request $request, $id)
+    public function view($id, $data)
     {
         $dokumen = Dokumen::find($id);
-        switch ($request->file) {
+        switch ($data) {
             case 'cover':
                 return redirect($dokumen->cover);
                 break;
@@ -58,7 +58,7 @@ class DokumenController extends Api
                 return redirect($dokumen->full_dokumen);
                 break;
             default:
-                return $request;
+                
         }
         // $lst = explode('/', $dokumen->cover);
 

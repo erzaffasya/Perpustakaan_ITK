@@ -65,7 +65,7 @@ Route::controller(DokumenController::class)->group(function () {
 });
 
 Route::get('/dokumen/{id}/download', [DokumenController::class, 'download']);
-Route::post('/dokumen/{id}/view', [DokumenController::class, 'view']);
+Route::get('/dokumen/{id}/view/{data}', [DokumenController::class, 'view']);
 // Route::get('/view/{filename}', [DokumenController::class, 'view_dokumen'])->name('viewdoc');
 
 //Protecting Routes
