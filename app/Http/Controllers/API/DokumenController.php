@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Dokumen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class DokumenController extends Api
@@ -16,31 +17,73 @@ class DokumenController extends Api
         return $this->successResponse($Dokumen);
     }
 
-    public function view($id)
+    public function view(Request $request, $id)
     {
         $dokumen = Dokumen::find($id);
-        $lst = explode('/', $dokumen->cover);
+        switch ($request->file) {
+            case 'cover':
+                return redirect($dokumen->cover);
+                break;
+            case 'abstract_en':
+                return redirect($dokumen->abstract_en);
+                break;
+            case 'abstract_id':
+                return redirect($dokumen->abstract_id);
+                break;
+            case 'bab1':
+                return redirect($dokumen->bab1);
+                break;
+            case 'bab2':
+                return redirect($dokumen->bab2);
+                break;
+            case 'bab3':
+                return redirect($dokumen->bab3);
+                break;
+            case 'bab4':
+                return redirect($dokumen->bab4);
+                break;
+            case 'kesimpulan':
+                return redirect($dokumen->kesimpulan);
+                break;
+            case 'daftar_pustaka':
+                return redirect($dokumen->daftar_pustaka);
+                break;
+            case 'paper':
+                return redirect($dokumen->paper);
+                break;
+            case 'lembar_persetujuan':
+                return redirect($dokumen->lembar_persetujuan);
+                break;
+            case 'full_dokumen':
+                return redirect($dokumen->full_dokumen);
+                break;
+            default:
+                return $request;
+        }
+        // $lst = explode('/', $dokumen->cover);
 
-        $txt = '/api/' . $dokumen->user_id . '/view/' . $lst[3];
-        return redirect($txt);
+        // $txt = '/api/' . $dokumen->user_id . '/view/' . $lst[3];
+        // dd($txt);
+        // return redirect('/api/dokumen/' . $dokumen->user_id . '/view/' . $lst[3]);
+
     }
 
     public function view_dokumen($id, $file_name)
     {
         // Check if file exists in app/storage/file folder
         // return $id;
-        $file_path = storage_path() . "/app/public/documents/" . $id . "/" . $file_name;
-        
-        return $file_path;
-        if (file_exists($file_path)) {
-            return Dokumen::make(file_get_contents($file_path), 200, [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="' . $file_name . '"'
-            ]);
-        } else {
-            // Error
-            exit('Requested file does not exist on our server!');
-        }
+        $file_path = Storage::url("documents/" . $id . "/" . $file_name);
+        // dd($file_path, $id, $file_name);
+        // return $file_path;
+        // if (file_exists($file_path)) {
+        return Dokumen::make(file_get_contents($file_path), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $file_name . '"'
+        ]);
+        // } else {
+        //     // Error
+        //     exit('Requested file does not exist on our server!');
+        // }
     }
 
     public function store(Request $request)

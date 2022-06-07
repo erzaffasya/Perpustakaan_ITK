@@ -64,14 +64,14 @@ Route::controller(DokumenController::class)->group(function () {
     Route::delete('dokumen/{id}', 'destroy');
 });
 
-
+Route::get('/dokumen/{id}/download', [DokumenController::class, 'download']);
+Route::post('/dokumen/{id}/view', [DokumenController::class, 'view']);
+// Route::get('/view/{filename}', [DokumenController::class, 'view_dokumen'])->name('viewdoc');
 
 //Protecting Routes
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
 
-    Route::get('/dokumen/{id}/download', [DokumenController::class, 'download']);
-    Route::get('/dokumen/{id}/view', [DokumenController::class, 'view']);
-    Route::get('{id}/view/{filename}', [DokumenController::class, 'view_dokumen']);
+
 });
