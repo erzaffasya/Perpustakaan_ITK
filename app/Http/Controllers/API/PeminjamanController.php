@@ -3,15 +3,21 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\Helper;
+use App\Http\Resources\PeminjamanResource;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class PeminjamanController extends Api
 {
     public function index()
     {
-        $Peminjaman = Peminjaman::all();
+        $Peminjaman = PeminjamanResource::collection(Peminjaman::all());
+        // dd (Helper::cek_batasan_dokumen(6));
+
+
         return $this->successResponse($Peminjaman);
     }
 
@@ -22,9 +28,7 @@ class PeminjamanController extends Api
             [
                 'tgl_peminjaman' => 'required',
                 'tgl_pengembalian' => 'required',
-                'status' => 'required',
                 'dokumen_id' => 'required',
-                'user_id' => 'required',
             ]
         );
 
@@ -32,7 +36,11 @@ class PeminjamanController extends Api
             return response()->json(['error' => $validator->errors()], '201');
         }
 
-        $Peminjaman = new Peminjaman($request->all());
+        if (Helper::cek_batasan_dokumen($request->dokumen_id) == False) {
+            return $this->errorResponse('Dokumen sudah penuh', 403);
+        }
+     
+        $Peminjaman = new Peminjaman(array_merge($request->all(), ['status' => False, 'user_id' => Auth::user()->id]));
         $Peminjaman->save();
 
         return $this->successResponse(['status' => true, 'message' => 'Peminjaman Berhasil Ditambahkan']);
@@ -45,7 +53,7 @@ class PeminjamanController extends Api
             return $this->errorResponse('Data tidak ditemukan', 201);
         }
 
-        return $this->successResponse($Peminjaman);
+        return $this->successResponse(new PeminjamanResource($Peminjaman));
     }
 
     public function update(Request $request, $id)

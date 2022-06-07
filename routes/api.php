@@ -55,6 +55,8 @@ Route::controller(PeminjamanController::class)->group(function () {
     Route::delete('peminjaman/{id}', 'destroy');
 });
 
+//Booking Progres
+
 //Dokumen
 Route::controller(DokumenController::class)->group(function () {
     Route::get('dokumen', 'index');
@@ -64,9 +66,12 @@ Route::controller(DokumenController::class)->group(function () {
     Route::delete('dokumen/{id}', 'destroy');
 });
 
-Route::get('/dokumen/{id}/download', [DokumenController::class, 'download']);
+// Route::get('/dokumen/{id}/download', [DokumenController::class, 'download']);
 Route::get('/dokumen/{id}/view/{data}', [DokumenController::class, 'view']);
 // Route::get('/view/{filename}', [DokumenController::class, 'view_dokumen'])->name('viewdoc');
+
+
+
 
 //Protecting Routes
 Route::middleware(['auth:sanctum'])->group(function () {

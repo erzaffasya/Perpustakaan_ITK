@@ -19,9 +19,12 @@ class Peminjaman extends Model
 
     protected $primaryKey = 'id';
 
-    protected $casts = [ 
-        'user_id' => 'integer', 
-        'dokumen_id' => 'integer', ];
+    protected $casts = [
+        'user_id' => 'integer',
+        'dokumen_id' => 'integer',
+        'tgl_pengembalian' => 'datetime',
+        'tgl_peminjaman' => 'datetime',
+    ];
 
     public function dokumen()
     {
