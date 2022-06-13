@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
-            $table->date('tgl_peminjaman')->nullable();
-            $table->date('tgl_pengembalian')->nullable();            
+            $table->dateTime('tgl_peminjaman')->nullable();
+            $table->dateTime('tgl_pengembalian')->nullable();            
             $table->boolean('status')->nullable();            
             $table->foreignId("dokumen_id")->nullable()->constrained("dokumen")->onDelete("cascade")->onUpdate("cascade");
             $table->foreignId("user_id")->nullable()->constrained("users")->onDelete("cascade")->onUpdate("cascade");

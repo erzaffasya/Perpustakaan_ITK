@@ -46,14 +46,6 @@ Route::controller(BookmarkController::class)->group(function () {
     Route::delete('bookmark/{id}', 'destroy');
 });
 
-//Peminjaman
-Route::controller(PeminjamanController::class)->group(function () {
-    Route::get('peminjaman', 'index');
-    Route::post('peminjaman', 'store');
-    Route::get('peminjaman/{id}', 'show');
-    Route::put('peminjaman/{id}', 'update');
-    Route::delete('peminjaman/{id}', 'destroy');
-});
 
 //Booking Progres
 
@@ -78,5 +70,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
 
-
+    //Peminjaman
+    Route::controller(PeminjamanController::class)->group(function () {
+        Route::get('peminjaman', 'index');
+        Route::post('peminjaman', 'store');
+        Route::get('peminjaman/{id}', 'show');
+        Route::put('peminjaman/{id}', 'update');
+        Route::delete('peminjaman/{id}', 'destroy');
+    });
 });

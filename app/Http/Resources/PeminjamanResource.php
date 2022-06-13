@@ -21,7 +21,7 @@ class PeminjamanResource extends JsonResource
             'tgl_pengembalian' => date('d-m-Y', strtotime($this->tgl_pengembalian)),
             'status' => $this->status,
             'dokumen' => $this->dokumen->judul,
-            'lama_hari' => $this->jauh_hari($this->tgl_peminjaman)
+            'durasi_peminjaman' => $this->jauh_hari($this->tgl_peminjaman)
         ];
     }
 
