@@ -4,7 +4,10 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BookmarkController;
 use App\Http\Controllers\API\DokumenController;
 use App\Http\Controllers\API\KategoriController;
+use App\Http\Controllers\API\KursiBacaController;
 use App\Http\Controllers\API\PeminjamanController;
+use App\Http\Controllers\API\PeminjamanRuanganController;
+use App\Http\Controllers\API\RuanganBacaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +30,33 @@ Route::get('/', function () {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/login-api', [AuthController::class, 'auth']);
+
+//ruangan-baca
+Route::controller(RuanganBacaController::class)->group(function () {
+    Route::get('ruangan-baca', 'index');
+    Route::post('ruangan-baca', 'store');
+    Route::get('ruangan-baca/{id}', 'show');
+    Route::put('ruangan-baca/{id}', 'update');
+    Route::delete('ruangan-baca/{id}', 'destroy');
+});
+
+//ruangan-baca
+Route::controller(KursiBacaController::class)->group(function () {
+    Route::get('kursi-baca', 'index');
+    Route::post('kursi-baca', 'store');
+    Route::get('kursi-baca/{id}', 'show');
+    Route::put('kursi-baca/{id}', 'update');
+    Route::delete('kursi-baca/{id}', 'destroy');
+});
+
+//peminjaman-ruangan
+Route::controller(PeminjamanRuanganController::class)->group(function () {
+    Route::get('peminjaman-ruangan', 'index');
+    Route::post('peminjaman-ruangan', 'store');
+    Route::get('peminjaman-ruangan/{id}', 'show');
+    Route::put('peminjaman-ruangan/{id}', 'update');
+    Route::delete('peminjaman-ruangan/{id}', 'destroy');
+});
 
 //Kategori
 Route::controller(KategoriController::class)->group(function () {
@@ -72,10 +102,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //Peminjaman
     Route::controller(PeminjamanController::class)->group(function () {
-        Route::get('peminjaman', 'index');
-        Route::post('peminjaman', 'store');
-        Route::get('peminjaman/{id}', 'show');
-        Route::put('peminjaman/{id}', 'update');
-        Route::delete('peminjaman/{id}', 'destroy');
+        Route::get('peminjaman-dokumen', 'index');
+        Route::post('peminjaman-dokumen', 'store');
+        Route::get('peminjaman-dokumen/{id}', 'show');
+        Route::put('peminjaman-dokumen/{id}', 'update');
+        Route::delete('peminjaman-dokumen/{id}', 'destroy');
     });
 });
