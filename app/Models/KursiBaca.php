@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class KursiBaca extends Model
 {
     use HasFactory;
+    protected $table = 'kursi_baca';
+    protected $fillable = [
+        'kode',
+        'kursi',
+        'ruangan_baca_id',
+    ];
+
+    protected $primaryKey = 'id';
+
+
+    public function RuanganBaca()
+    {
+        return $this->belongsTo(RuanganBaca::class, 'ruangan_baca', 'id');
+    }
 }

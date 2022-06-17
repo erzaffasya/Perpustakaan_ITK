@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('peminjaman', function (Blueprint $table) {
+        Schema::create('peminjaman_dokumen', function (Blueprint $table) {
             $table->id();
             $table->dateTime('tgl_peminjaman')->nullable();
             $table->dateTime('tgl_pengembalian')->nullable();            
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('peminjaman');
+        Schema::dropIfExists('peminjaman_dokumen');
     }
 };
