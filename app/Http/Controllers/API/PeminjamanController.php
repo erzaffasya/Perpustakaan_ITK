@@ -33,11 +33,11 @@ class PeminjamanController extends Api
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], '201');
+            return response()->json(['error' => $validator->errors()], 422);
         }
 
         if (Helper::cek_batasan_dokumen($request->dokumen_id) == False) {
-            return $this->errorResponse('Dokumen sudah penuh', 403);
+            return $this->errorResponse('Dokumen sudah penuh', 422);
         }
      
         $Peminjaman = new Peminjaman(array_merge($request->all(), ['status' => False, 'user_id' => Auth::user()->id]));
@@ -50,7 +50,7 @@ class PeminjamanController extends Api
     {
         $Peminjaman = Peminjaman::find($id);
         if (!$Peminjaman) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         return $this->successResponse(new PeminjamanResource($Peminjaman));
@@ -61,7 +61,7 @@ class PeminjamanController extends Api
 
         $Peminjaman = Peminjaman::find($id);
         if (!$Peminjaman) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $Peminjaman = Peminjaman::find($Peminjaman->id)->update([
@@ -79,7 +79,7 @@ class PeminjamanController extends Api
     {
         $Peminjaman = Peminjaman::find($id);
         if (!$Peminjaman) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $Peminjaman->delete();

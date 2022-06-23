@@ -26,7 +26,7 @@ class BookmarkController extends Api
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], '201');
+            return response()->json(['error' => $validator->errors()], 422);
         }
 
         $Bookmark = new Bookmark($request->all());
@@ -39,7 +39,7 @@ class BookmarkController extends Api
     {
         $Bookmark = Bookmark::find($id);
         if (!$Bookmark) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         return $this->successResponse($Bookmark);
@@ -50,7 +50,7 @@ class BookmarkController extends Api
 
         $Bookmark = Bookmark::find($id);
         if (!$Bookmark) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
         // dd($request);
         $Bookmark = Bookmark::find($Bookmark->id)->update([
@@ -65,7 +65,7 @@ class BookmarkController extends Api
     {
         $Bookmark = Bookmark::find($id);
         if (!$Bookmark) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $Bookmark->delete();

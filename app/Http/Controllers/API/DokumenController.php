@@ -97,7 +97,7 @@ class DokumenController extends Api
         );
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], '201');
+            return response()->json(['error' => $validator->errors()], 422);
         }
 
 
@@ -227,7 +227,7 @@ class DokumenController extends Api
     {
         $Dokumen = Dokumen::find($id);
         if (!$Dokumen) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         return $this->successResponse($Dokumen);
@@ -238,7 +238,7 @@ class DokumenController extends Api
 
         $Dokumen = Dokumen::find($id);
         if (!$Dokumen) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $Dokumen = Dokumen::find($Dokumen->id);
@@ -372,7 +372,7 @@ class DokumenController extends Api
     {
         $Dokumen = Dokumen::find($id);
         if (!$Dokumen) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $Dokumen->delete();

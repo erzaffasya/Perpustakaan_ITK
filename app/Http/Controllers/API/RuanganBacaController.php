@@ -41,7 +41,7 @@ class RuanganBacaController extends Api
     {
         $RuanganBaca = RuanganBaca::find($id);
         if (!$RuanganBaca) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         return $this->successResponse($RuanganBaca);
@@ -52,7 +52,7 @@ class RuanganBacaController extends Api
 
         $RuanganBaca = RuanganBaca::find($id);
         if (!$RuanganBaca) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $RuanganBaca = RuanganBaca::find($RuanganBaca->id)->update([
@@ -68,7 +68,7 @@ class RuanganBacaController extends Api
     {
         $RuanganBaca = RuanganBaca::find($id);
         if (!$RuanganBaca) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $RuanganBaca->delete();

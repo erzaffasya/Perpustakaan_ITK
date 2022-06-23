@@ -41,7 +41,7 @@ class KategoriController extends Api
     {
         $Kategori = Kategori::find($id);
         if (!$Kategori) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         return $this->successResponse($Kategori);
@@ -52,7 +52,7 @@ class KategoriController extends Api
 
         $Kategori = Kategori::find($id);
         if (!$Kategori) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $Kategori = Kategori::find($Kategori->id)->update([
@@ -68,7 +68,7 @@ class KategoriController extends Api
     {
         $Kategori = Kategori::find($id);
         if (!$Kategori) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $Kategori->delete();

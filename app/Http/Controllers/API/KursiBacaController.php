@@ -43,7 +43,7 @@ class KursiBacaController extends Api
     {
         $KursiBaca = KursiBaca::find($id);
         if (!$KursiBaca) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         return $this->successResponse($KursiBaca);
@@ -54,7 +54,7 @@ class KursiBacaController extends Api
 
         $KursiBaca = KursiBaca::find($id);
         if (!$KursiBaca) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $KursiBaca = KursiBaca::find($KursiBaca->id)->update([
@@ -71,7 +71,7 @@ class KursiBacaController extends Api
     {
         $KursiBaca = KursiBaca::find($id);
         if (!$KursiBaca) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $KursiBaca->delete();

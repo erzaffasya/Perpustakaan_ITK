@@ -44,7 +44,7 @@ class PeminjamanRuanganController extends Api
             $PeminjamanRuangan->save();
             return $this->successResponse(['status' => true, 'message' => 'PeminjamanRuangan Berhasil Ditambahkan']);
         } else {
-            return $this->errorResponse(['status' => false, 'message' => 'Kursi Sudah Dibooking'], 403);
+            return $this->errorResponse(['status' => false, 'message' => 'Kursi Sudah Dibooking'], 422);
         }
     }
 
@@ -52,7 +52,7 @@ class PeminjamanRuanganController extends Api
     {
         $PeminjamanRuangan = PeminjamanRuangan::find($id);
         if (!$PeminjamanRuangan) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         return $this->successResponse($PeminjamanRuangan);
@@ -63,7 +63,7 @@ class PeminjamanRuanganController extends Api
 
         $PeminjamanRuangan = PeminjamanRuangan::find($id);
         if (!$PeminjamanRuangan) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $PeminjamanRuangan = PeminjamanRuangan::find($PeminjamanRuangan->id)->update([
@@ -80,7 +80,7 @@ class PeminjamanRuanganController extends Api
     {
         $PeminjamanRuangan = PeminjamanRuangan::find($id);
         if (!$PeminjamanRuangan) {
-            return $this->errorResponse('Data tidak ditemukan', 201);
+            return $this->errorResponse('Data tidak ditemukan', 422);
         }
 
         $PeminjamanRuangan->delete();
@@ -92,7 +92,7 @@ class PeminjamanRuanganController extends Api
         $dataKursiBaca = KursiBaca::where('ruangan_baca_id', '=', $ruangan)->get();
 
         if (count($dataKursiBaca) == 0) {
-            return $this->errorResponse('Kursi tidak tersedia', 201);
+            return $this->errorResponse('Kursi tidak tersedia', 422);
         }
 
         foreach ($dataKursiBaca as $item) {
