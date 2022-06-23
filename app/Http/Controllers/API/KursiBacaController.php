@@ -7,7 +7,7 @@ use App\Models\KursiBaca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class KursiBacaController extends Controller
+class KursiBacaController extends Api
 {
     public function index()
     {

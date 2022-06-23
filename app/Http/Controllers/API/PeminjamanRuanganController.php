@@ -7,7 +7,7 @@ use App\Models\PeminjamanRuangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class PeminjamanRuanganController extends Controller
+class PeminjamanRuanganController extends Api
 {
     public function index()
     {
@@ -30,13 +30,20 @@ class PeminjamanRuanganController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
 
-        $PeminjamanRuangan = new PeminjamanRuangan();
-        $PeminjamanRuangan->user_id = $request->user_id;
-        $PeminjamanRuangan->kursi_baca_id = $request->kursi_baca_id;
-        $PeminjamanRuangan->tanggal_peminjaman = $request->tanggal_peminjaman;
-        $PeminjamanRuangan->save();
+        $cekRuangan = PeminjamanRuangan::where('kursi_baca_id', $request->kursi_baca_id)
+            ->where('tanggal_peminjaman', $request->tanggal_peminjaman)
+            ->first();
 
-        return $this->successResponse(['status' => true, 'message' => 'PeminjamanRuangan Berhasil Ditambahkan']);
+        if ($cekRuangan == null) {
+            $PeminjamanRuangan = new PeminjamanRuangan();
+            $PeminjamanRuangan->user_id = $request->user_id;
+            $PeminjamanRuangan->kursi_baca_id = $request->kursi_baca_id;
+            $PeminjamanRuangan->tanggal_peminjaman = $request->tanggal_peminjaman;
+            $PeminjamanRuangan->save();
+            return $this->successResponse(['status' => true, 'message' => 'PeminjamanRuangan Berhasil Ditambahkan']);
+        } else {
+            return $this->errorResponse(['status' => false, 'message' => 'Kursi Sudah Dibooking'], 403);
+        }
     }
 
     public function show($id)
@@ -76,5 +83,8 @@ class PeminjamanRuanganController extends Controller
 
         $PeminjamanRuangan->delete();
         return $this->successResponse(['status' => true, 'message' => 'PeminjamanRuangan Berhasil Dihapus']);
+    }
+    public function RuanganKosong($tanggal){
+        $Ruangan = PeminjamanRuangan::
     }
 }

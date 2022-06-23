@@ -7,7 +7,7 @@ use App\Models\RuanganBaca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class RuanganBacaController extends Controller
+class RuanganBacaController extends Api
 {
     public function index()
     {

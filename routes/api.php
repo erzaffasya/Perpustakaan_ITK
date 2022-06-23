@@ -56,6 +56,7 @@ Route::controller(PeminjamanRuanganController::class)->group(function () {
     Route::get('peminjaman-ruangan/{id}', 'show');
     Route::put('peminjaman-ruangan/{id}', 'update');
     Route::delete('peminjaman-ruangan/{id}', 'destroy');
+    Route::get('ruang-kosong/{tanggal}', 'RuanganKosong');
 });
 
 //Kategori
