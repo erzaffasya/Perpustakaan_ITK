@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\KursiBaca;
 use App\Models\PeminjamanRuangan;
+use App\Models\RuanganBaca;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -84,7 +86,25 @@ class PeminjamanRuanganController extends Api
         $PeminjamanRuangan->delete();
         return $this->successResponse(['status' => true, 'message' => 'PeminjamanRuangan Berhasil Dihapus']);
     }
-    public function RuanganKosong($tanggal){
-        $Ruangan = PeminjamanRuangan::
+    public function RuanganKosong($ruangan, $tanggal)
+    {
+        $Ruangan1 = KursiBaca::where('ruangan_baca_id', '=', $ruangan)->get();       //kursi where ruangan
+        // ruangan kosong = error
+        foreach ($Ruangan1 as $item) {
+            $cekKursi = PeminjamanRuangan::where('kursi_baca_id', '=', $item->id)->where('tanggal_peminjaman', '=', $tanggal)->first();
+
+            if ($cekKursi == null) {
+                $data = 'Tersedia';
+            } else {
+                $data = 'Tidak Tersedia';
+            }
+
+            $Ruangan[] = array_merge([
+                'id' => $item->id,
+                'nama_kursi' => $item->kursi,
+                'status_kursi' => $item->status_kursi
+            ], ['status_kursi' => $data]);
+        }
+        return $Ruangan;
     }
 }
