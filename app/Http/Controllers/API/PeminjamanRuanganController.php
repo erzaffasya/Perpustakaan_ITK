@@ -7,6 +7,7 @@ use App\Models\KursiBaca;
 use App\Models\PeminjamanRuangan;
 use App\Models\RuanganBaca;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class PeminjamanRuanganController extends Api
@@ -22,7 +23,6 @@ class PeminjamanRuanganController extends Api
         $validator = Validator::make(
             $request->all(),
             [
-                'user_id' => 'required',
                 'kursi_baca_id' => 'required',
                 'tanggal_peminjaman' => 'required',
             ]
@@ -38,7 +38,7 @@ class PeminjamanRuanganController extends Api
 
         if ($cekRuangan == null) {
             $PeminjamanRuangan = new PeminjamanRuangan();
-            $PeminjamanRuangan->user_id = $request->user_id;
+            $PeminjamanRuangan->user_id = Auth::user()->id;
             $PeminjamanRuangan->kursi_baca_id = $request->kursi_baca_id;
             $PeminjamanRuangan->tanggal_peminjaman = $request->tanggal_peminjaman;
             $PeminjamanRuangan->save();
