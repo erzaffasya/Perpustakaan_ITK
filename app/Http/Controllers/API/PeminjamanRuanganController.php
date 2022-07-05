@@ -98,10 +98,11 @@ class PeminjamanRuanganController extends Api
         foreach ($dataKursiBaca as $item) {
             $cekKursi = PeminjamanRuangan::where('kursi_baca_id', '=', $item->id)->where('tanggal_peminjaman', '=', $tanggal)->first();
 
+            // True = Tersedia, False = Tidak Tersedia
             if ($cekKursi == null) {
-                $data = 'Tersedia';
+                $data = True;
             } else {
-                $data = 'Tidak Tersedia';
+                $data = False;
             }
 
             $Ruangan[] = array_merge([
