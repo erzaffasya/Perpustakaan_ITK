@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\KursiBaca;
 use App\Models\PeminjamanRuangan;
 use App\Models\RuanganBaca;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -35,14 +36,20 @@ class PeminjamanRuanganController extends Api
         $cekRuangan = PeminjamanRuangan::where('kursi_baca_id', $request->kursi_baca_id)
             ->where('tanggal_peminjaman', $request->tanggal_peminjaman)
             ->first();
-
+        $cekPeminjaman = PeminjamanRuangan::where('tanggal_peminjaman', '>=', Carbon::now())
+            ->where('user_id', Auth::user()->id)->first();
+        // return $cekPeminjaman;
         if ($cekRuangan == null) {
-            $PeminjamanRuangan = new PeminjamanRuangan();
-            $PeminjamanRuangan->user_id = Auth::user()->id;
-            $PeminjamanRuangan->kursi_baca_id = $request->kursi_baca_id;
-            $PeminjamanRuangan->tanggal_peminjaman = $request->tanggal_peminjaman;
-            $PeminjamanRuangan->save();
-            return $this->successResponse(['status' => true, 'message' => 'PeminjamanRuangan Berhasil Ditambahkan']);
+            if ($cekPeminjaman == null) {
+                $PeminjamanRuangan = new PeminjamanRuangan();
+                $PeminjamanRuangan->user_id = Auth::user()->id;
+                $PeminjamanRuangan->kursi_baca_id = $request->kursi_baca_id;
+                $PeminjamanRuangan->tanggal_peminjaman = $request->tanggal_peminjaman;
+                $PeminjamanRuangan->save();
+                return $this->successResponse(['status' => true, 'message' => 'PeminjamanRuangan Berhasil Ditambahkan']);
+            } else {
+                return $this->errorResponse(['status' => false, 'message' => 'Anda Sudah Booking Ruangan'], 422);
+            }
         } else {
             return $this->errorResponse(['status' => false, 'message' => 'Kursi Sudah Dibooking'], 422);
         }
@@ -89,12 +96,13 @@ class PeminjamanRuanganController extends Api
 
     public function RuanganKosong($ruangan, $tanggal)
     {
-        $dataKursiBaca = KursiBaca::where('ruangan_baca_id', '=', $ruangan)->get();
+        $dataKursiBaca = KursiBaca::join('ruangan_baca', 'kursi_baca.ruangan_baca_id', 'ruangan_baca.id')
+            ->where('kursi_baca.ruangan_baca_id', '=', $ruangan)
+            ->get();
 
         if (count($dataKursiBaca) == 0) {
             return $this->errorResponse('Kursi tidak tersedia', 422);
         }
-
 
         if ($tanggal == 'undefined') {
             return response()->json(['error' => 'Data Tidak Lengkap'], 422);
@@ -113,6 +121,7 @@ class PeminjamanRuanganController extends Api
             $Ruangan[] = array_merge([
                 'id' => $item->id,
                 'nama_kursi' => $item->kursi,
+                'nama_ruangan' => $item->ruangan,
                 'status_kursi' => $item->status_kursi
             ], ['status_kursi' => $data]);
         }
