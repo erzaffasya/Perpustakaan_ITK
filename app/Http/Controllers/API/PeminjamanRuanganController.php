@@ -95,6 +95,11 @@ class PeminjamanRuanganController extends Api
             return $this->errorResponse('Kursi tidak tersedia', 422);
         }
 
+
+        if ($tanggal == 'undefined') {
+            return response()->json(['error' => 'Data Tidak Lengkap'], 422);
+        }
+
         foreach ($dataKursiBaca as $item) {
             $cekKursi = PeminjamanRuangan::where('kursi_baca_id', '=', $item->id)->where('tanggal_peminjaman', '=', $tanggal)->first();
 
