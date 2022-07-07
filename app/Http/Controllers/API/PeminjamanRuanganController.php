@@ -96,7 +96,8 @@ class PeminjamanRuanganController extends Api
 
     public function RuanganKosong($ruangan, $tanggal)
     {
-        $dataKursiBaca = KursiBaca::join('ruangan_baca', 'kursi_baca.ruangan_baca_id', 'ruangan_baca.id')
+        $dataKursiBaca = KursiBaca::select('kursi_baca.*', 'ruangan_baca.ruangan')
+            ->join('ruangan_baca', 'kursi_baca.ruangan_baca_id', 'ruangan_baca.id')
             ->where('kursi_baca.ruangan_baca_id', '=', $ruangan)
             ->get();
 
