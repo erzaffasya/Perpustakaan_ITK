@@ -36,21 +36,21 @@ class AuthController extends Api
             ->json(['data' => $user, 'token' => $token, 'token_type' => 'Bearer',]);
     }
 
-    // public function login(Request $request)
-    // {
-    //     if (!Auth::attempt($request->only('email', 'password'))) {
-    //         return $this->errorResponse('Unauthorized', 401);
-    //     }
+    public function login(Request $request)
+    {
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return $this->errorResponse('Unauthorized', 401);
+        }
 
-    //     $user = User::where('email', $request['email'])->firstOrFail();
+        $user = User::where('email', $request['email'])->firstOrFail();
 
-    //     $token = $user->createToken('auth_token')->plainTextToken;
-    //     return $this->successResponse([
-    //         'message' => 'Authentikasi Berhasil',
-    //         'token' => $token,
-    //         'role' => $user->role,
-    //     ]);
-    // }
+        $token = $user->createToken('auth_token')->plainTextToken;
+        return $this->successResponse([
+            'message' => 'Authentikasi Berhasil',
+            'token' => $token,
+            'role' => $user->role,
+        ]);
+    }
 
     // method for user logout and delete token
     public function logout()
@@ -62,91 +62,91 @@ class AuthController extends Api
         ];
     }
 
-    public function login(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required',
-            'password' => 'required'
-        ]);
+    // public function login(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'email' => 'required',
+    //         'password' => 'required'
+    //     ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
-        }
+    //     if ($validator->fails()) {
+    //         return response()->json($validator->errors());
+    //     }
 
-        $response = Http::acceptJson()->post('https://api-gerbang.itk.ac.id/api/siakad/login', [
-            'email' => $request->email,
-            'password' => $request->password
-        ]);
-        // return $response->json();
-        if ($response->ok()) {
-            $json = $response->json();
-            $mahasiswa = $json['data'];
+    //     $response = Http::acceptJson()->post('https://api-gerbang.itk.ac.id/api/siakad/login', [
+    //         'email' => $request->email,
+    //         'password' => $request->password
+    //     ]);
+    //     // return $response->json();
+    //     if ($response->ok()) {
+    //         $json = $response->json();
+    //         $mahasiswa = $json['data'];
 
-            if (array_key_exists("PE_Nip", $mahasiswa['biodata'])) {
-                //dosen
-                $mahasiswalogin = User::updateOrCreate(
-                    [
-                        'nim' => $mahasiswa['XNAMA']
-                    ],
-                    [
-                        'nim' => $mahasiswa['XNAMA'],
-                        'name' => $mahasiswa['USERDESC'],
-                        'email' => $mahasiswa['biodata']['PE_Email'],
-                        'role' => 'Dosen'
-                    ]
-                );
-                $token = $mahasiswalogin->createToken('auth_token')->plainTextToken;
-                return $this->successResponse([
-                    'message' => 'Authentikasi Berhasil',
-                    'nim' => $mahasiswa['XNAMA'],
-                    'name' => $mahasiswa['USERDESC'],
-                    'email' => $mahasiswa['biodata']['PE_Email'],
-                    'role' => 'Dosen',
-                    'token' => $token
-                ]);
-            } elseif (array_key_exists("MA_Nrp", $mahasiswa['biodata'])) {
-                // mahasiswa
-                $mahasiswalogin = User::updateOrCreate(
-                    [
-                        'nim' => $mahasiswa['XNAMA']
-                    ],
-                    [
-                        'nim' => $mahasiswa['XNAMA'],
-                        'name' => $mahasiswa['USERDESC'],
-                        'email' => $mahasiswa['biodata']['MA_Email'],
-                        'jurusan' => $mahasiswa['biodata']['nama_jurusan'],
-                        'prodi' => $mahasiswa['biodata']['prodi']['Nama_Prodi'],
-                        'angkatan' => $mahasiswa['biodata']['MA_Tahun_Masuk'],
-                        'role' => 'Mahasiswa',
-                    ]
-                );
-                $token = $mahasiswalogin->createToken('auth_token')->plainTextToken;
-                return $this->successResponse([
-                    'message' => 'Authentikasi Berhasil',
-                    'nim' => $mahasiswa['XNAMA'],
-                    'name' => $mahasiswa['USERDESC'],
-                    'email' => $mahasiswa['biodata']['MA_Email'],
-                    'jurusan' => $mahasiswa['biodata']['nama_jurusan'],
-                    'prodi' => $mahasiswa['biodata']['prodi']['Nama_Prodi'],
-                    'angkatan' => $mahasiswa['biodata']['MA_Tahun_Masuk'],
-                    'role' => 'Mahasiswa',
-                    'token' => $token
-                ]);
-            }
-        } else {
-            if (!Auth::attempt($request->only('email', 'password'))) {
-                return $this->errorResponse('Unauthorized', 401);
-            }
+    //         if (array_key_exists("PE_Nip", $mahasiswa['biodata'])) {
+    //             //dosen
+    //             $mahasiswalogin = User::updateOrCreate(
+    //                 [
+    //                     'nim' => $mahasiswa['XNAMA']
+    //                 ],
+    //                 [
+    //                     'nim' => $mahasiswa['XNAMA'],
+    //                     'name' => $mahasiswa['USERDESC'],
+    //                     'email' => $mahasiswa['biodata']['PE_Email'],
+    //                     'role' => 'Dosen'
+    //                 ]
+    //             );
+    //             $token = $mahasiswalogin->createToken('auth_token')->plainTextToken;
+    //             return $this->successResponse([
+    //                 'message' => 'Authentikasi Berhasil',
+    //                 'nim' => $mahasiswa['XNAMA'],
+    //                 'name' => $mahasiswa['USERDESC'],
+    //                 'email' => $mahasiswa['biodata']['PE_Email'],
+    //                 'role' => 'Dosen',
+    //                 'token' => $token
+    //             ]);
+    //         } elseif (array_key_exists("MA_Nrp", $mahasiswa['biodata'])) {
+    //             // mahasiswa
+    //             $mahasiswalogin = User::updateOrCreate(
+    //                 [
+    //                     'nim' => $mahasiswa['XNAMA']
+    //                 ],
+    //                 [
+    //                     'nim' => $mahasiswa['XNAMA'],
+    //                     'name' => $mahasiswa['USERDESC'],
+    //                     'email' => $mahasiswa['biodata']['MA_Email'],
+    //                     'jurusan' => $mahasiswa['biodata']['nama_jurusan'],
+    //                     'prodi' => $mahasiswa['biodata']['prodi']['Nama_Prodi'],
+    //                     'angkatan' => $mahasiswa['biodata']['MA_Tahun_Masuk'],
+    //                     'role' => 'Mahasiswa',
+    //                 ]
+    //             );
+    //             $token = $mahasiswalogin->createToken('auth_token')->plainTextToken;
+    //             return $this->successResponse([
+    //                 'message' => 'Authentikasi Berhasil',
+    //                 'nim' => $mahasiswa['XNAMA'],
+    //                 'name' => $mahasiswa['USERDESC'],
+    //                 'email' => $mahasiswa['biodata']['MA_Email'],
+    //                 'jurusan' => $mahasiswa['biodata']['nama_jurusan'],
+    //                 'prodi' => $mahasiswa['biodata']['prodi']['Nama_Prodi'],
+    //                 'angkatan' => $mahasiswa['biodata']['MA_Tahun_Masuk'],
+    //                 'role' => 'Mahasiswa',
+    //                 'token' => $token
+    //             ]);
+    //         }
+    //     } else {
+    //         if (!Auth::attempt($request->only('email', 'password'))) {
+    //             return $this->errorResponse('Unauthorized', 401);
+    //         }
 
-            $user = User::where('email', $request['email'])->firstOrFail();
-            $token = $user->createToken('auth_token')->plainTextToken;
+    //         $user = User::where('email', $request['email'])->firstOrFail();
+    //         $token = $user->createToken('auth_token')->plainTextToken;
 
-            return $this->successResponse([
-                'message' => 'Authentikasi Berhasil',
-                'token' => $token,
-            ]);
-        }
-    }
+    //         return $this->successResponse([
+    //             'message' => 'Authentikasi Berhasil',
+    //             'token' => $token,
+    //         ]);
+    //     }
+    // }
 
     public function profile()
     {
