@@ -36,11 +36,11 @@ class PeminjamanRuanganController extends Api
         $cekRuangan = PeminjamanRuangan::where('kursi_baca_id', $request->kursi_baca_id)
             ->where('tanggal_peminjaman', $request->tanggal_peminjaman)
             ->first();
-        $cekPeminjaman = PeminjamanRuangan::where('tanggal_peminjaman', '>=', Carbon::now())
-            ->where('user_id', Auth::user()->id)->first();
+        $cekPeminjaman = PeminjamanRuangan::where('tanggal_peminjaman', '>', Carbon::now()->subDays(1))
+            ->where('user_id', Auth::user()->id)->count();
         // return $cekPeminjaman;
         if ($cekRuangan == null) {
-            if ($cekPeminjaman == null) {
+            if ($cekPeminjaman < 1) {
                 $PeminjamanRuangan = new PeminjamanRuangan();
                 $PeminjamanRuangan->user_id = Auth::user()->id;
                 $PeminjamanRuangan->kursi_baca_id = $request->kursi_baca_id;
