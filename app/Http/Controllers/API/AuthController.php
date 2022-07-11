@@ -45,9 +45,11 @@ class AuthController extends Api
     //     $user = User::where('email', $request['email'])->firstOrFail();
 
     //     $token = $user->createToken('auth_token')->plainTextToken;
-
-    //     return response()
-    //         ->json(['message' => 'Hi ' . $user->name . ', welcome to home', 'token' => $token, 'token_type' => 'Bearer',]);
+    //     return $this->successResponse([
+    //         'message' => 'Authentikasi Berhasil',
+    //         'token' => $token,
+    //         'role' => $user->role,
+    //     ]);
     // }
 
     // method for user logout and delete token
@@ -71,7 +73,7 @@ class AuthController extends Api
             return response()->json($validator->errors());
         }
 
-        $response = Http::acceptJson()->post('https://api-gerbang2.itk.ac.id/api/siakad/login', [
+        $response = Http::acceptJson()->post('https://api-gerbang.itk.ac.id/api/siakad/login', [
             'email' => $request->email,
             'password' => $request->password
         ]);
@@ -94,15 +96,14 @@ class AuthController extends Api
                     ]
                 );
                 $token = $mahasiswalogin->createToken('auth_token')->plainTextToken;
-                return response()
-                    ->json([
-                        'message' => 'Authentikasi Berhasil',
-                        'nim' => $mahasiswa['XNAMA'],
-                        'name' => $mahasiswa['USERDESC'],
-                        'email' => $mahasiswa['biodata']['PE_Email'],
-                        'role' => 'Dosen',
-                        'token' => $token
-                    ]);
+                return $this->successResponse([
+                    'message' => 'Authentikasi Berhasil',
+                    'nim' => $mahasiswa['XNAMA'],
+                    'name' => $mahasiswa['USERDESC'],
+                    'email' => $mahasiswa['biodata']['PE_Email'],
+                    'role' => 'Dosen',
+                    'token' => $token
+                ]);
             } elseif (array_key_exists("MA_Nrp", $mahasiswa['biodata'])) {
                 // mahasiswa
                 $mahasiswalogin = User::updateOrCreate(
@@ -120,18 +121,17 @@ class AuthController extends Api
                     ]
                 );
                 $token = $mahasiswalogin->createToken('auth_token')->plainTextToken;
-                return response()
-                    ->json([
-                        'message' => 'Authentikasi Berhasil',
-                        'nim' => $mahasiswa['XNAMA'],
-                        'name' => $mahasiswa['USERDESC'],
-                        'email' => $mahasiswa['biodata']['MA_Email'],
-                        'jurusan' => $mahasiswa['biodata']['nama_jurusan'],
-                        'prodi' => $mahasiswa['biodata']['prodi']['Nama_Prodi'],
-                        'angkatan' => $mahasiswa['biodata']['MA_Tahun_Masuk'],
-                        'role' => 'Mahasiswa',
-                        'token' => $token
-                    ]);
+                return $this->successResponse([
+                    'message' => 'Authentikasi Berhasil',
+                    'nim' => $mahasiswa['XNAMA'],
+                    'name' => $mahasiswa['USERDESC'],
+                    'email' => $mahasiswa['biodata']['MA_Email'],
+                    'jurusan' => $mahasiswa['biodata']['nama_jurusan'],
+                    'prodi' => $mahasiswa['biodata']['prodi']['Nama_Prodi'],
+                    'angkatan' => $mahasiswa['biodata']['MA_Tahun_Masuk'],
+                    'role' => 'Mahasiswa',
+                    'token' => $token
+                ]);
             }
         } else {
             if (!Auth::attempt($request->only('email', 'password'))) {
@@ -141,11 +141,10 @@ class AuthController extends Api
             $user = User::where('email', $request['email'])->firstOrFail();
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            return response()
-                ->json([
-                    'message' => 'Authentikasi Berhasil',
-                    'token' => $token,
-                ]);
+            return $this->successResponse([
+                'message' => 'Authentikasi Berhasil',
+                'token' => $token,
+            ]);
         }
     }
 
