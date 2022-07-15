@@ -88,10 +88,10 @@ class DokumenController extends Api
 
     public function store(Request $request)
     {
+        // return $request->all();
         $validator = Validator::make(
             $request->all(),
             [
-                'user_id' => 'required',
                 'kategori_id' => 'required',
             ]
         );
@@ -101,41 +101,88 @@ class DokumenController extends Api
         }
 
 
-
         $Dokumen = new Dokumen();
         $Dokumen->judul = $request->judul;
         $Dokumen->kategori_id = $request->kategori_id;
         $Dokumen->tahun_terbit = $request->tahun_terbit;
         $Dokumen->nama_pengarang = $request->nama_pengarang;
         $Dokumen->penerbit = $request->penerbit;
-        $Dokumen->user_id = $request->user_id;
+        $Dokumen->user_id = Auth::user()->id;
 
         // Cover 
-        if ($request->cover != null) {
+        // if ($request->cover != null) {
             $file_ext = $request->cover->extension();
             $file_name = 'cover_' . $request->user_id . '_' . time() . '.' . $file_ext;
             $cover = 'storage/documents/' . $request->user_id . '/' . $file_name;
             $request->file('cover')->storeAs("public/documents/$request->user_id", $file_name);
             $Dokumen->cover = $cover;
+        // }
+        if ($request->lembar_pengesaham != null) {
+            $file_ext = $request->lembar_pengesaham->extension();
+            $file_name = 'lembar_pengesaham_' . $request->user_id . '_' . time() . '.' . $file_ext;
+            $lembar_pengesaham = 'storage/documents/' . $request->user_id . '/' . $file_name;
+            $request->file('lembar_pengesaham')->storeAs("public/documents/$request->user_id", $file_name);
+            $Dokumen->lembar_pengesaham = $lembar_pengesaham;
         }
+        if ($request->kata_pengantar != null) {
+            $file_ext = $request->kata_pengantar->extension();
+            $file_name = 'kata_pengantar_' . $request->user_id . '_' . time() . '.' . $file_ext;
+            $kata_pengantar = 'storage/documents/' . $request->user_id . '/' . $file_name;
+            $request->file('kata_pengantar')->storeAs("public/documents/$request->user_id", $file_name);
+            $Dokumen->kata_pengantar = $kata_pengantar;
+        }
+        if ($request->ringkasan != null) {
+            $file_ext = $request->ringkasan->extension();
+            $file_name = 'ringkasan_' . $request->user_id . '_' . time() . '.' . $file_ext;
+            $ringkasan = 'storage/documents/' . $request->user_id . '/' . $file_name;
+            $request->file('ringkasan')->storeAs("public/documents/$request->user_id", $file_name);
+            $Dokumen->ringkasan = $ringkasan;
+        }
+        if ($request->daftar_isi != null) {
+            $file_ext = $request->daftar_isi->extension();
+            $file_name = 'daftar_isi_' . $request->user_id . '_' . time() . '.' . $file_ext;
+            $daftar_isi = 'storage/documents/' . $request->user_id . '/' . $file_name;
+            $request->file('daftar_isi')->storeAs("public/documents/$request->user_id", $file_name);
+            $Dokumen->daftar_isi = $daftar_isi;
+        }
+        if ($request->daftar_gambar != null) {
+            $file_ext = $request->daftar_gambar->extension();
+            $file_name = 'daftar_gambar_' . $request->user_id . '_' . time() . '.' . $file_ext;
+            $daftar_gambar = 'storage/documents/' . $request->user_id . '/' . $file_name;
+            $request->file('daftar_gambar')->storeAs("public/documents/$request->user_id", $file_name);
+            $Dokumen->daftar_gambar = $daftar_gambar;
+        }
+        if ($request->daftar_tabel != null) {
+            $file_ext = $request->daftar_tabel->extension();
+            $file_name = 'daftar_tabel_' . $request->user_id . '_' . time() . '.' . $file_ext;
+            $daftar_tabel = 'storage/documents/' . $request->user_id . '/' . $file_name;
+            $request->file('daftar_tabel')->storeAs("public/documents/$request->user_id", $file_name);
+            $Dokumen->daftar_tabel = $daftar_tabel;
+        }
+        if ($request->daftar_notasi != null) {
+            $file_ext = $request->daftar_notasi->extension();
+            $file_name = 'daftar_notasi_' . $request->user_id . '_' . time() . '.' . $file_ext;
+            $daftar_notasi = 'storage/documents/' . $request->user_id . '/' . $file_name;
+            $request->file('daftar_notasi')->storeAs("public/documents/$request->user_id", $file_name);
+            $Dokumen->daftar_notasi = $daftar_notasi;
+        }
+        // // abstract_en 
+        // if ($request->abstract_en != null) {
+        //     $file_ext = $request->abstract_en->extension();
+        //     $file_name = 'abstract_en_' . $request->user_id . '_' . time() . '.' . $file_ext;
+        //     $abstract_en = 'storage/documents/' . $request->user_id . '/' . $file_name;
+        //     $request->abstract_en->storeAs("public/documents/$request->user_id",  $file_name);
+        //     $Dokumen->abstract_en = $abstract_en;
+        // }
 
-        // abstract_en 
-        if ($request->abstract_en != null) {
-            $file_ext = $request->abstract_en->extension();
-            $file_name = 'abstract_en_' . $request->user_id . '_' . time() . '.' . $file_ext;
-            $abstract_en = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->abstract_en->storeAs("public/documents/$request->user_id",  $file_name);
-            $Dokumen->abstract_en = $abstract_en;
-        }
-
-        // abstract_id 
-        if ($request->abstract_id != null) {
-            $file_ext = $request->abstract_id->extension();
-            $file_name = 'abstract_id_' . $request->user_id . '_' . time() . '.' . $file_ext;
-            $abstract_id = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->abstract_id->storeAs("public/documents/$request->user_id", $file_name);
-            $Dokumen->abstract_id = $abstract_id;
-        }
+        // // abstract_id 
+        // if ($request->abstract_id != null) {
+        //     $file_ext = $request->abstract_id->extension();
+        //     $file_name = 'abstract_id_' . $request->user_id . '_' . time() . '.' . $file_ext;
+        //     $abstract_id = 'storage/documents/' . $request->user_id . '/' . $file_name;
+        //     $request->abstract_id->storeAs("public/documents/$request->user_id", $file_name);
+        //     $Dokumen->abstract_id = $abstract_id;
+        // }
 
         // bab1 
         if ($request->bab1 != null) {
@@ -172,42 +219,48 @@ class DokumenController extends Api
             $request->bab4->storeAs("public/documents/$request->user_id", $file_name);
             $Dokumen->bab4 = $bab4;
         }
-
-        // kesimpulan 
-        if ($request->kesimpulan != null) {
-            $file_ext = $request->kesimpulan->extension();
-            $file_name = 'kesimpulan_' . $request->user_id . '_' . time() . '.' . $file_ext;
-            $kesimpulan = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->kesimpulan->storeAs("public/documents/$request->user_id", $file_name);
-            $Dokumen->kesimpulan = $kesimpulan;
+        if ($request->lampiran != null) {
+            $file_ext = $request->lampiran->extension();
+            $file_name = 'lampiran_' . $request->user_id . '_' . time() . '.' . $file_ext;
+            $lampiran = 'storage/documents/' . $request->user_id . '/' . $file_name;
+            $request->file('lampiran')->storeAs("public/documents/$request->user_id", $file_name);
+            $Dokumen->lampiran = $lampiran;
         }
+        // // kesimpulan 
+        // if ($request->kesimpulan != null) {
+        //     $file_ext = $request->kesimpulan->extension();
+        //     $file_name = 'kesimpulan_' . $request->user_id . '_' . time() . '.' . $file_ext;
+        //     $kesimpulan = 'storage/documents/' . $request->user_id . '/' . $file_name;
+        //     $request->kesimpulan->storeAs("public/documents/$request->user_id", $file_name);
+        //     $Dokumen->kesimpulan = $kesimpulan;
+        // }
 
-        // daftar_pustaka 
-        if ($request->daftar_pustaka != null) {
-            $file_ext = $request->daftar_pustaka->extension();
-            $file_name = 'daftar_pustaka_' . $request->user_id . '_' . time() . '.' . $file_ext;
-            $daftar_pustaka = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->daftar_pustaka->storeAs("public/documents/$request->user_id", $file_name);
-            $Dokumen->daftar_pustaka = $daftar_pustaka;
-        }
+        // // daftar_pustaka 
+        // if ($request->daftar_pustaka != null) {
+        //     $file_ext = $request->daftar_pustaka->extension();
+        //     $file_name = 'daftar_pustaka_' . $request->user_id . '_' . time() . '.' . $file_ext;
+        //     $daftar_pustaka = 'storage/documents/' . $request->user_id . '/' . $file_name;
+        //     $request->daftar_pustaka->storeAs("public/documents/$request->user_id", $file_name);
+        //     $Dokumen->daftar_pustaka = $daftar_pustaka;
+        // }
 
-        // paper 
-        if ($request->paper != null) {
-            $file_ext = $request->paper->extension();
-            $file_name = 'paper_' . $request->user_id . '_' . time() . '.' . $file_ext;
-            $paper = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->paper->storeAs("public/documents/$request->user_id", $file_name);
-            $Dokumen->paper = $paper;
-        }
+        // // paper 
+        // if ($request->paper != null) {
+        //     $file_ext = $request->paper->extension();
+        //     $file_name = 'paper_' . $request->user_id . '_' . time() . '.' . $file_ext;
+        //     $paper = 'storage/documents/' . $request->user_id . '/' . $file_name;
+        //     $request->paper->storeAs("public/documents/$request->user_id", $file_name);
+        //     $Dokumen->paper = $paper;
+        // }
 
-        // lembar_persetujuan 
-        if ($request->lembar_persetujuan != null) {
-            $file_ext = $request->lembar_persetujuan->extension();
-            $file_name = 'lembar_persetujuan_' . $request->user_id . '_' . time() . '.' . $file_ext;
-            $lembar_persetujuan = 'storage/documents/' . $request->user_id . '/' . $file_name;
-            $request->lembar_persetujuan->storeAs("public/documents/$request->user_id", $file_name);
-            $Dokumen->lembar_persetujuan = $lembar_persetujuan;
-        }
+        // // lembar_persetujuan 
+        // if ($request->lembar_persetujuan != null) {
+        //     $file_ext = $request->lembar_persetujuan->extension();
+        //     $file_name = 'lembar_persetujuan_' . $request->user_id . '_' . time() . '.' . $file_ext;
+        //     $lembar_persetujuan = 'storage/documents/' . $request->user_id . '/' . $file_name;
+        //     $request->lembar_persetujuan->storeAs("public/documents/$request->user_id", $file_name);
+        //     $Dokumen->lembar_persetujuan = $lembar_persetujuan;
+        // }
 
         // full_dokumen 
         if ($request->full_dokumen != null) {
