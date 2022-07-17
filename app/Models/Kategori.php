@@ -12,7 +12,9 @@ class Kategori extends Model
     protected $fillable = [
         'nama_kategori',
         'detail',
+        'berkas'
     ];
 
     protected $primaryKey = 'id';
+    // protected $casts = ['berkas' => 'array'];
 }

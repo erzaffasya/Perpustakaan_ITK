@@ -42,7 +42,9 @@ return new class extends Migration
             // $table->string('paper')->nullable();
             // $table->string('lembar_persetujuan')->nullable();
             $table->string('full_dokumen')->nullable();
+            $table->enum('status',['Revisi','Diterima','Ditolak','Diproses'])->nullable()->default('Diproses');
             $table->longtext('data_tambahan')->nullable();
+
             $table->timestamps();
         });
     }

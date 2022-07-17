@@ -17,6 +17,7 @@ class KategoriController extends Api
 
     public function store(Request $request)
     {
+        // return $request->all();
         $validator = Validator::make(
             $request->all(),
             [
@@ -32,6 +33,7 @@ class KategoriController extends Api
         $Kategori = new Kategori();
         $Kategori->nama_kategori = $request->nama_kategori;
         $Kategori->detail = $request->detail;
+        $Kategori->berkas = $request->berkas;
         $Kategori->save();
 
         return $this->successResponse(['status' => true, 'message' => 'Kategori Berhasil Ditambahkan']);
