@@ -27,7 +27,7 @@ Route::get('/', function () {
 });
 
 
-
+Route::get('/showDokumen', [DokumenController::class, 'showfile']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/login-api', [AuthController::class, 'auth']);
@@ -106,4 +106,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('peminjaman-dokumen/{id}', 'update');
         Route::delete('peminjaman-dokumen/{id}', 'destroy');
     });
+  
 });

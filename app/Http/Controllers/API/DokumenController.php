@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\DokumenResource;
 use App\Models\Dokumen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,6 +24,53 @@ class DokumenController extends Api
         return $this->successResponse($Dokumen);
     }
 
+    public function showfile()
+    {
+        // $dokumen = Dokumen::find($id);
+        // switch ($data) {
+        //     case 'cover':
+        //         $file = $dokumen->cover;
+                
+        //     case 'abstract_en':
+        //         $file = $dokumen->abstract_en;
+                
+        //     case 'abstract_id':
+        //         $file = $dokumen->abstract_id;
+                
+        //     case 'bab1':
+        //         $file = $dokumen->bab1;
+                
+        //     case 'bab2':
+        //         $file = $dokumen->bab2;
+                
+        //     case 'bab3':
+        //         $file = $dokumen->bab3;
+                
+        //     case 'bab4':
+        //         $file = $dokumen->bab4;
+                
+        //     case 'kesimpulan':
+        //         $file = $dokumen->kesimpulan;
+                
+        //     case 'daftar_pustaka':
+        //         $file = $dokumen->daftar_pustaka;
+                
+        //     case 'paper':
+        //         $file = $dokumen->paper;
+                
+        //     case 'lembar_persetujuan':
+        //         $file = $dokumen->lembar_persetujuan;
+                
+        //     case 'full_dokumen':
+        //         $file = $dokumen->full_dokumen;
+                
+        //     default:
+        // }(storage_path('documents/1/cover_1_1658128910.pdf')
+        $file = File::get(public_path('storage/documents/1/cover_1_1658128910.pdf'));
+        $response = Response::make($file, 200);
+        $response->header('Content-Type', 'application/pdf');
+        return $response;
+    }
     public function view($id, $data)
     {
         $dokumen = Dokumen::find($id);
