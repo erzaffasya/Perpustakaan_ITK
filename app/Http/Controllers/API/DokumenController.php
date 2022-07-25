@@ -66,7 +66,7 @@ class DokumenController extends Api
                 
         //     default:
         // }(storage_path('documents/1/cover_1_1658128910.pdf')
-        $file = File::get(public_path('storage/documents/1/cover_1_1658128910.pdf'));
+        $file = File::get(public_path('storage/documents/1/cover_1_1658163365.pdf'));
         $response = Response::make($file, 200);
         $response->header('Content-Type', 'application/pdf');
         return $response;
