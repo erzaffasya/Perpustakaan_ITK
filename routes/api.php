@@ -27,7 +27,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/showDokumen', [DokumenController::class, 'showfile']);
+Route::get('/showDokumen/{id}/{data}', [DokumenController::class, 'showfile']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/login-api', [AuthController::class, 'auth']);

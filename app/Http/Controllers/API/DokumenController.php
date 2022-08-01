@@ -24,49 +24,78 @@ class DokumenController extends Api
         return $this->successResponse($Dokumen);
     }
 
-    public function showfile()
+    public function showfile($id, $data)
     {
-        // $dokumen = Dokumen::find($id);
-        // switch ($data) {
-        //     case 'cover':
-        //         $file = $dokumen->cover;
-                
-        //     case 'abstract_en':
-        //         $file = $dokumen->abstract_en;
-                
-        //     case 'abstract_id':
-        //         $file = $dokumen->abstract_id;
-                
-        //     case 'bab1':
-        //         $file = $dokumen->bab1;
-                
-        //     case 'bab2':
-        //         $file = $dokumen->bab2;
-                
-        //     case 'bab3':
-        //         $file = $dokumen->bab3;
-                
-        //     case 'bab4':
-        //         $file = $dokumen->bab4;
-                
-        //     case 'kesimpulan':
-        //         $file = $dokumen->kesimpulan;
-                
-        //     case 'daftar_pustaka':
-        //         $file = $dokumen->daftar_pustaka;
-                
-        //     case 'paper':
-        //         $file = $dokumen->paper;
-                
-        //     case 'lembar_persetujuan':
-        //         $file = $dokumen->lembar_persetujuan;
-                
-        //     case 'full_dokumen':
-        //         $file = $dokumen->full_dokumen;
-                
-        //     default:
-        // }(storage_path('documents/1/cover_1_1658128910.pdf')
-        $file = File::get(public_path('storage/documents/1/cover_1_1658163365.pdf'));
+        // dd($id, $data);
+        $dokumen = Dokumen::find($id);
+        $file = 'erza';
+        // dd($file);
+        // dd($data);
+        switch ($data) {
+            case 'cover':
+                $file = $dokumen->cover;
+                break;
+            case 'lembar_pengesahan':
+                $file = $dokumen->lembar_pengesahan;
+                break;
+            case 'kata_pengantar':
+                $file = $dokumen->kata_pengantar;
+                break;
+            case 'ringkasan':
+                $file = $dokumen->ringkasan;
+                break;
+            case 'daftar_isi':
+                $file = $dokumen->daftar_isi;
+                break;
+            case 'daftar_gambar':
+                $file = $dokumen->daftar_gambar;
+                break;
+            case 'daftar_tabel':
+                $file = $dokumen->daftar_tabel;
+                break;
+            case 'daftar_notasi':
+                $file = $dokumen->daftar_notasi;
+                break;
+            case 'abstract_en':
+                $file = $dokumen->abstract_en;
+                break;
+            case 'abstract_id':
+                $file = $dokumen->abstract_id;
+                break;
+            case 'bab1':
+                $file = $dokumen->bab1;
+                break;
+            case 'bab2':
+                $file = $dokumen->bab2;
+                break;
+            case 'bab3':
+                $file = $dokumen->bab3;
+                break;
+            case 'bab4':
+                $file = $dokumen->bab4;
+                break;
+            case 'kesimpulan':
+                $file = $dokumen->kesimpulan;
+                break;
+            case 'daftar_pustaka':
+                $file = $dokumen->daftar_pustaka;
+                break;
+            case 'lampiran':
+                $file = $dokumen->lampiran;
+                break;
+            case 'paper':
+                $file = $dokumen->paper;
+                break;
+            case 'lembar_persetujuan':
+                $file = $dokumen->lembar_persetujuan;
+                break;
+            case 'full_dokumen':
+                $file = $dokumen->full_dokumen;
+                break;
+            default:
+        }
+        // dd($file, $dokumen,$dokumen->cover);
+        $file = File::get(public_path($file));
         $response = Response::make($file, 200);
         $response->header('Content-Type', 'application/pdf');
         return $response;
